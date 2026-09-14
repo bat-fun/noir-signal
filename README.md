@@ -48,9 +48,36 @@ git clone https://github.com/bat-fun/noir-signal.git
 cd noir-signal
 ```
 
-Copy the configuration files into your home configuration directory.
+Back up your existing configuration before installing.
 
-Review the configuration before using it and adjust application paths, monitors, keybindings, and dependencies for your system.
+Copy the configuration directories into `~/.config`:
+
+```bash
+cp -r hypr kitty matugen rofi waybar ~/.config/
+cp starship.toml ~/.config/
+```
+
+Make the scripts executable:
+
+```bash
+chmod +x ~/.config/hypr/scripts/*
+```
+
+Place your wallpapers in:
+
+```text
+~/Pictures/wallpaper
+```
+
+Then review the configuration and adjust:
+
+- `hypr/module/programs.lua` — application commands
+- `hypr/module/monitors.lua` — monitor configuration
+- `hypr/module/binds.lua` — keybindings
+- `matugen/config.toml` — generated color outputs
+- `starship.toml` — shell prompt
+
+Noir Signal assumes the required applications and dependencies are installed on your system. Review the **Requirements** section before starting Hyprland.
 
 ## Structure
 
