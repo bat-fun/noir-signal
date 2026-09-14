@@ -44,7 +44,7 @@ Additional dependencies are used by individual features and keybindings.
 Clone the repository:
 
 ```bash
-git clone <git@github.com:bat-fun/noir-signal.git>
+git clone git@github.com:bat-fun/noir-signal.git
 cd noir-signal
 ```
 
