@@ -1,0 +1,131 @@
+#!/usr/bin/env bash
+
+WALLPAPER_DIR="$HOME/Pictures/wallpaper"
+ROFI_THEME="$HOME/.config/rofi/noir-signal-wallpaper.rasi"
+CACHE_FILE="$HOME/.cache/noir-signal-wallpaper"
+
+mapfile -t WALLPAPERS < <(
+    find "$WALLPAPER_DIR" -maxdepth 1 -type f \
+        \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) \
+        -printf '%f\n' |
+    sort
+)
+
+if [ "${#WALLPAPERS[@]}" -eq 0 ]; then
+    notify-send "Wallpaper Picker" "No wallpapers found"
+    exit 1
+fi
+
+# ---------------------------------------------------------
+# AWWW transitions
+# ---------------------------------------------------------
+
+TRANSITIONS=(
+    fade
+    left
+    right
+    top
+    bottom
+    wipe
+    wave
+    grow
+    center
+    any
+    outer
+)
+
+# ---------------------------------------------------------
+# Apply wallpaper
+# ---------------------------------------------------------
+
+apply_wallpaper() {
+    local selected="$1"
+    local wallpaper="$WALLPAPER_DIR/$selected"
+
+    local transition
+    transition=$(printf '%s\n' "${TRANSITIONS[@]}" | shuf -n 1)
+
+    awww img "$wallpaper" \
+        --transition-type "$transition" \
+        --transition-duration 1.5 \
+        --transition-fps 60
+
+    matugen \
+        --mode dark \
+        --type scheme-tonal-spot \
+        --source-color-index 0 \
+        --quiet \
+        image "$wallpaper"
+
+    killall -SIGUSR2 waybar
+
+    for pid in $(pgrep kitty); do
+        kill -SIGUSR1 "$pid" 2>/dev/null
+    done
+
+    hyprctl reload
+
+    printf '%s\n' "$wallpaper" > "$CACHE_FILE"
+
+    notify-send \
+        -t 1800 \
+        "Wallpaper changed" \
+        "$selected"
+}
+
+# ---------------------------------------------------------
+# Direct random mode
+# ---------------------------------------------------------
+
+if [ "$1" = "--random" ]; then
+    SELECTED=$(printf '%s\n' "${WALLPAPERS[@]}" | shuf -n 1)
+    apply_wallpaper "$SELECTED"
+    exit 0
+fi
+
+# ---------------------------------------------------------
+# Build Rofi wallpaper list
+# ---------------------------------------------------------
+
+OPTIONS=("Random")
+
+for wallpaper in "${WALLPAPERS[@]}"; do
+    OPTIONS+=("$wallpaper")
+done
+
+ROFI_INPUT=""
+
+for wallpaper in "${OPTIONS[@]}"; do
+    if [ "$wallpaper" = "Random" ]; then
+        ROFI_INPUT+="Random\0icon\x1fpreferences-desktop-wallpaper\n"
+    else
+        ROFI_INPUT+="$wallpaper\0icon\x1f$WALLPAPER_DIR/$wallpaper\n"
+    fi
+done
+
+# ---------------------------------------------------------
+# Open picker
+# ---------------------------------------------------------
+
+SELECTED=$(printf '%b' "$ROFI_INPUT" | \
+    rofi \
+        -dmenu \
+        -i \
+        -p "Wallpaper" \
+        -theme "$ROFI_THEME")
+
+[ -z "$SELECTED" ] && exit 0
+
+# ---------------------------------------------------------
+# Random selection from Rofi
+# ---------------------------------------------------------
+
+if [ "$SELECTED" = "Random" ]; then
+    SELECTED=$(printf '%s\n' "${WALLPAPERS[@]}" | shuf -n 1)
+fi
+
+# ---------------------------------------------------------
+# Apply selected wallpaper
+# ---------------------------------------------------------
+
+apply_wallpaper "$SELECTED"

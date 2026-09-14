@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+SELECTED=$(cliphist list | rofi -dmenu -i -p "Clipboard")
+
+[ -z "$SELECTED" ] && exit 0
+
+printf '%s\n' "$SELECTED" | cliphist decode | wl-copy

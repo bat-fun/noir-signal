@@ -1,0 +1,20 @@
+# Generated Matugen output
+.cache/
+waybar/waybar-colors.css
+
+# Logs
+*.log
+
+# Local/private environment
+.env
+.env.*
+*.local
+
+# Editor / IDE
+.vscode/
+.vscode-oss/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db

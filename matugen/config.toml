@@ -1,0 +1,26 @@
+[config]
+reload_apps = false
+
+[templates.noir_colors]
+input_path = "~/.config/matugen/templates/noir-colors.css"
+output_path = "~/.cache/noir-signal/colors.css"
+
+[templates.waybar_colors]
+input_path = "~/.config/matugen/templates/waybar-colors.css"
+output_path = "~/.config/waybar/waybar-colors.css"
+
+[templates.kitty_colors]
+input_path = "~/.config/matugen/templates/kitty-colors.conf"
+output_path = "~/.cache/noir-signal/kitty-colors.conf"
+
+[templates.rofi_colors]
+input_path = "~/.config/matugen/templates/rofi-colors.rasi"
+output_path = "~/.cache/noir-signal/rofi-colors.rasi"
+
+[templates.hyprland_colors]
+input_path = "~/.config/matugen/templates/hyprland-colors.lua"
+output_path = "~/.cache/noir-signal/hyprland-colors.lua"
+
+[templates.hyprlock_colors]
+input_path = "~/.config/matugen/templates/hyprlock-colors.conf"
+output_path = "~/.cache/noir-signal/hyprlock-colors.conf"

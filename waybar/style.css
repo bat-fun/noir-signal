@@ -1,0 +1,200 @@
+@import url("waybar-colors.css");
+
+* {
+    border: none;
+    min-height: 0;
+
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 12px;
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   BAR
+   ========================================================= */
+
+window#waybar {
+    background: rgba(9, 10, 12, 0.67);
+
+    border-radius: 13px;
+    padding: 0 8px;
+    margin: 0;
+}
+
+
+/* =========================================================
+   ARCH
+   ========================================================= */
+
+#custom-arch {
+    margin-left: 16px;
+    margin-right: 12px;
+
+    color: @noir_accent;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition:
+        color 150ms ease,
+        opacity 150ms ease;
+}
+
+#custom-arch:hover {
+    color: #E7E4DC;
+    opacity: 0.92;
+}
+
+
+/* =========================================================
+   WORKSPACES
+   ========================================================= */
+
+#workspaces {
+    margin-left: 0;
+}
+
+#workspaces button {
+    min-width: 18px;
+
+    margin: 0;
+    padding: 0 7px;
+
+    color: #62666D;
+
+    background: transparent;
+    border-radius: 5px;
+
+    transition:
+        color 140ms ease,
+        background 140ms ease;
+}
+
+#workspaces button:hover {
+    color: #E7E4DC;
+    background: rgba(231, 228, 220, 0.035);
+}
+
+#workspaces button.active {
+    color: @noir_accent;
+    background: rgba(214, 168, 95, 0.055);
+}
+
+#workspaces button.urgent {
+    color: #C46D6D;
+}
+
+
+/* =========================================================
+   CURRENT WINDOW
+   ========================================================= */
+
+#window {
+    margin: 0 24px;
+
+    color: #777B82;
+
+    font-size: 11px;
+    font-weight: 400;
+}
+
+#window.empty {
+    color: transparent;
+}
+
+
+/* =========================================================
+   SYSTEM MODULES
+   ========================================================= */
+
+#network,
+#bluetooth,
+#pulseaudio {
+    margin-right: 18px;
+
+    color: #777B82;
+
+    transition:
+        color 140ms ease,
+        opacity 140ms ease;
+}
+
+
+/* Network */
+
+#network:hover {
+    color: #E7E4DC;
+}
+
+#network.disconnected {
+    color: #C46D6D;
+}
+
+
+/* Bluetooth */
+
+#bluetooth {
+    min-width: 14px;
+}
+
+#bluetooth.connected {
+    color: @noir_accent;
+}
+
+#bluetooth.off,
+#bluetooth.disabled {
+    color: #4C5057;
+}
+
+#bluetooth:hover {
+    color: #E7E4DC;
+}
+
+
+/* Audio */
+
+#pulseaudio:hover {
+    color: #E7E4DC;
+}
+
+#pulseaudio.muted {
+    color: #C46D6D;
+}
+
+
+/* =========================================================
+   CLOCK
+   ========================================================= */
+
+#clock {
+    margin-right: 18px;
+
+    color: @noir_accent;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    letter-spacing: 0.2px;
+}
+
+
+/* =========================================================
+   TRAY
+   ========================================================= */
+
+#tray {
+    margin-right: 14px;
+
+    padding-left: 2px;
+
+    color: #777B82;
+}
+
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+}
