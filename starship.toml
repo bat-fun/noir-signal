@@ -1,0 +1,31 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$character
+"""
+
+[directory]
+style = "fg:#E7E4DC"
+format = "[$path]($style) "
+truncation_length = 3
+truncate_to_repo = false
+read_only = " 󰌾"
+
+[git_branch]
+symbol = "󰊢 "
+style = "fg:#8FA6A0"
+format = "[$symbol$branch]($style) "
+
+[git_status]
+style = "fg:#D6A85F"
+format = "([$all_status$ahead_behind]($style)) "
+
+[character]
+success_symbol = "[❯](fg:#D6A85F)"
+error_symbol = "[❯](fg:#C46D6D)"
+vimcmd_symbol = "[❮](fg:#D6A85F)"
