@@ -149,6 +149,44 @@ Start with:
 - `hypr/module/theme.lua` — theme configuration
 - `matugen/templates/` — generated color templates
 
+## Keybindings
+
+The default modifier is `SUPER`.
+
+| Key                   | Action                           |
+| --------------------- | -------------------------------- |
+| `SUPER + Enter`       | Open terminal                    |
+| `SUPER + E`           | Open file manager                |
+| `SUPER + A`           | Application launcher             |
+| `SUPER + B`           | Open browser                     |
+| `SUPER + C`           | Open Code - OSS                  |
+| `SUPER + Q`           | Close active window              |
+| `SUPER + L`           | Lock screen                      |
+| `SUPER + R`           | Random wallpaper                 |
+| `SUPER + D`           | Wallpaper picker                 |
+| `SUPER + V`           | Clipboard picker                 |
+| `SUPER + Shift + V`   | Clear clipboard history          |
+| `SUPER + W`           | Restart Waybar                   |
+| `SUPER + X`           | Open logout menu                 |
+| `SUPER + M`           | Exit Hyprland / shutdown         |
+| `SUPER + Space`       | Toggle floating                  |
+| `SUPER + P`           | Toggle pseudo-tile               |
+| `SUPER + J`           | Toggle split                     |
+| `SUPER + S`           | Toggle special workspace         |
+| `SUPER + Shift + S`   | Move window to special workspace |
+| `SUPER + Arrow Keys`  | Move focus                       |
+| `SUPER + 1–9`         | Switch workspace                 |
+| `SUPER + 0`           | Switch to workspace 10           |
+| `SUPER + Shift + 1–9` | Move window to workspace         |
+| `SUPER + Shift + 0`   | Move window to workspace 10      |
+| `SUPER + Mouse Left`  | Move window                      |
+| `SUPER + Mouse Right` | Resize window                    |
+| `Print`               | Screenshot selected area         |
+| `Shift + Print`       | Full-screen screenshot           |
+| `Volume Keys`         | Control volume                   |
+| `Brightness Keys`     | Control brightness               |
+| `Media Keys`          | Control media playback           |
+
 ## Known Limitations
 
 - Primarily designed for Arch Linux.
