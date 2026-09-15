@@ -791,49 +791,49 @@ ensure_theme_fallbacks() {
 
     [[ -s "$cache_dir/colors.css" ]] || cat > "$cache_dir/colors.css" <<'EOF'
 :root {
-    --noir-bg: #090A0C;
-    --noir-surface: #111318;
-    --noir-surface-alt: #181B21;
-    --noir-text: #E7E4DC;
-    --noir-muted: #777B82;
-    --noir-accent: #D6A85F;
-    --noir-secondary: #8FA6A0;
-    --noir-tertiary: #78889A;
-    --noir-danger: #C46D6D;
-    --noir-outline: #2A2D32;
+    --noir-bg: #080A0F;
+    --noir-surface: #10141C;
+    --noir-surface-alt: #181E28;
+    --noir-text: #F1F3ED;
+    --noir-muted: #8992A1;
+    --noir-accent: #B9D86B;
+    --noir-secondary: #7CC7D9;
+    --noir-tertiary: #8496D5;
+    --noir-danger: #EF7180;
+    --noir-outline: #303845;
 }
 EOF
 
     [[ -s "$cache_dir/hyprland-colors.lua" ]] || cat > "$cache_dir/hyprland-colors.lua" <<'EOF'
 return {
-    accent = "#D6A85F",
-    secondary = "#8FA6A0",
-    danger = "#C46D6D",
-    inactive = "#2A2D32",
+    accent = "#B9D86B",
+    secondary = "#7CC7D9",
+    danger = "#EF7180",
+    inactive = "#303845",
 }
 EOF
 
     [[ -s "$cache_dir/hyprlock-colors.conf" ]] || cat > "$cache_dir/hyprlock-colors.conf" <<'EOF'
-$accent = #D6A85F
-$secondary = #8FA6A0
-$danger = #C46D6D
-$text = #E7E4DC
-$muted = #777B82
-$background = #090A0C
+$accent = #B9D86B
+$secondary = #7CC7D9
+$danger = #EF7180
+$text = #F1F3ED
+$muted = #8992A1
+$background = #080A0F
 EOF
 
     [[ -s "$cache_dir/kitty-colors.conf" ]] || cat > "$cache_dir/kitty-colors.conf" <<'EOF'
-background #090A0C
-foreground #E7E4DC
-selection_background #2A2520
-selection_foreground #F1EDE4
-cursor #D6A85F
-cursor_text_color #090A0C
-color0 #111318
-color1 #C46D6D
-color2 #8FA6A0
-color3 #D6A85F
-color4 #78889A
+background #080A0F
+foreground #F1F3ED
+selection_background #28351E
+selection_foreground #F1F3ED
+cursor #B9D86B
+cursor_text_color #080A0F
+color0 #10141C
+color1 #EF7180
+color2 #7CC7D9
+color3 #B9D86B
+color4 #8496D5
 color5 #9A879A
 color6 #7FA09A
 color7 #BFC0BA
@@ -844,57 +844,57 @@ color11 #E2BA70
 color12 #91A0B0
 color13 #B39AB3
 color14 #94B6AF
-color15 #E7E4DC
+color15 #F1F3ED
 EOF
 
     [[ -s "$cache_dir/rofi-colors.rasi" ]] || cat > "$cache_dir/rofi-colors.rasi" <<'EOF'
 * {
-    noir-accent: #D6A85F;
-    noir-secondary: #8FA6A0;
-    noir-tertiary: #78889A;
-    noir-muted: #777B82;
-    noir-outline: #2A2D32;
-    noir-danger: #C46D6D;
-    noir-bg: #090A0C;
-    noir-surface: #111318;
-    noir-surface-alt: #181B21;
-    noir-text: #E7E4DC;
+    noir-accent: #B9D86B;
+    noir-secondary: #7CC7D9;
+    noir-tertiary: #8496D5;
+    noir-muted: #8992A1;
+    noir-outline: #303845;
+    noir-danger: #EF7180;
+    noir-bg: #080A0F;
+    noir-surface: #10141C;
+    noir-surface-alt: #181E28;
+    noir-text: #F1F3ED;
 }
 EOF
 
     [[ -s "$cache_dir/dunst-colors.conf" ]] || cat > "$cache_dir/dunst-colors.conf" <<'EOF'
 [global]
-    background = "#111318"
-    foreground = "#E7E4DC"
-    frame_color = "#2A2D32"
+    background = "#10141C"
+    foreground = "#F1F3ED"
+    frame_color = "#B9D86B"
 
 [urgency_low]
-    background = "#111318"
-    foreground = "#777B82"
-    frame_color = "#8FA6A0"
+    background = "#10141C"
+    foreground = "#8992A1"
+    frame_color = "#7CC7D9"
 
 [urgency_normal]
-    background = "#181B21"
-    foreground = "#E7E4DC"
-    frame_color = "#D6A85F"
+    background = "#181E28"
+    foreground = "#F1F3ED"
+    frame_color = "#B9D86B"
 
 [urgency_critical]
     background = "#3A2024"
     foreground = "#F4D8D8"
-    frame_color = "#C46D6D"
+    frame_color = "#EF7180"
 EOF
 
     [[ -s "$CONFIG_DIR/waybar/waybar-colors.css" ]] || cat > "$CONFIG_DIR/waybar/waybar-colors.css" <<'EOF'
-@define-color noir_bg #090A0C;
-@define-color noir_surface #111318;
-@define-color noir_surface_alt #181B21;
-@define-color noir_text #E7E4DC;
-@define-color noir_muted #777B82;
-@define-color noir_accent #D6A85F;
-@define-color noir_secondary #8FA6A0;
-@define-color noir_tertiary #78889A;
-@define-color noir_danger #C46D6D;
-@define-color noir_outline #2A2D32;
+@define-color noir_bg #080A0F;
+@define-color noir_surface #10141C;
+@define-color noir_surface_alt #181E28;
+@define-color noir_text #F1F3ED;
+@define-color noir_muted #8992A1;
+@define-color noir_accent #B9D86B;
+@define-color noir_secondary #7CC7D9;
+@define-color noir_tertiary #8496D5;
+@define-color noir_danger #EF7180;
+@define-color noir_outline #303845;
 EOF
 }
 

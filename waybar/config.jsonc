@@ -19,33 +19,39 @@
         "network",
         "bluetooth",
         "pulseaudio",
+        "battery",
         "clock"
     ],
 
     "custom/arch": {
         "format": "",
         "tooltip": true,
-        "tooltip-format": "Arch Linux"
+        "tooltip-format": "Arch Linux // Applications",
+        "on-click": "rofi -show drun -config ~/.config/rofi/config.rasi"
     },
 
     "hyprland/workspaces": {
-        "disable-scroll": true,
+        "disable-scroll": false,
         "all-outputs": true,
         "sort-by-number": true,
-        "format": "{id}"
+        "format": "{id}",
+        "on-scroll-up": "hyprctl dispatch workspace e-1",
+        "on-scroll-down": "hyprctl dispatch workspace e+1"
     },
 
     "hyprland/window": {
         "format": "{}",
         "max-length": 35,
-        "separate-outputs": true
+        "separate-outputs": true,
+        "on-click-right": "hyprctl dispatch togglefloating"
     },
 
     "network": {
         "format-wifi": "",
         "format-ethernet": "󰈀",
         "format-disconnected": "󰤮",
-        "tooltip-format": "{ifname}\n{ipaddr}"
+        "tooltip-format": "{ifname}\n{ipaddr}",
+        "on-click": "nm-connection-editor"
     },
 
     "bluetooth": {
@@ -71,11 +77,32 @@
             ]
         },
         "scroll-step": 5,
-        "tooltip-format": "{volume}%"
+        "tooltip-format": "{volume}%",
+        "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-scroll-up": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+",
+        "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+    },
+
+    "battery": {
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-icons": [
+            "󰁺",
+            "󰁻",
+            "󰁼",
+            "󰁽",
+            "󰁾",
+            "󰁿",
+            "󰂀",
+            "󰂁",
+            "󰂂",
+            "󰁹"
+        ],
+        "tooltip-format": "{timeTo}\n{capacity}%"
     },
 
     "clock": {
-        "format": "{:%I:%M %p}",
+        "format": "{:%H:%M}",
         "tooltip-format": "{:%A · %d %B %Y}"
     },
 

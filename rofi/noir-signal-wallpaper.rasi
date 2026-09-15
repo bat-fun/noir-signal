@@ -13,19 +13,20 @@ configuration {
     text: @noir-text;
     muted: @noir-muted;
     accent: @noir-accent;
-
     font: "JetBrainsMono Nerd Font 10";
     text-color: @text;
     background-color: transparent;
 }
 
 window {
-    width: 90%;
+    width: 94%;
     border: 1px;
     border-color: @noir-outline;
-    border-radius: 16px;
+    border-radius: 4px;
+    border-left: 3px;
+    border-left-color: @accent;
     background-color: @bg;
-    padding: 18px;
+    padding: 20px;
 }
 
 mainbox {
@@ -41,7 +42,7 @@ inputbar {
     background-color: @surface;
     border: 1px;
     border-color: @noir-outline;
-    border-radius: 10px;
+    border-radius: 4px;
 
     children: [
         prompt,
@@ -63,7 +64,7 @@ entry {
 listview {
     columns: 5;
     lines: 3;
-    spacing: 8px;
+    spacing: 6px;
     scrollbar: true;
     fixed-height: false;
 }
@@ -71,7 +72,7 @@ listview {
 element {
     orientation: vertical;
     padding: 7px;
-    border-radius: 9px;
+    border-radius: 3px;
     background-color: @surface;
 }
 

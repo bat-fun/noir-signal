@@ -8,4 +8,5 @@ return {
     secondary = "{{colors.secondary.dark.hex}}",
     danger = "{{colors.error.dark.hex}}",
     inactive = "{{colors.outline.dark.hex}}",
+    signal = "{{colors.primary_container.dark.hex}}",
 }

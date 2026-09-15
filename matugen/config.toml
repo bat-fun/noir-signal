@@ -27,4 +27,8 @@ output_path = "~/.cache/noir-signal/hyprlock-colors.conf"
 
 [templates.dunst_colors]
 input_path = "~/.config/matugen/templates/dunst-colors.conf"
-output_path = "~/.cache/noir-signal/dunst-colors.conf"
+output_path = "~/.config/dunst/dunstrc"
+
+[templates.starship]
+input_path = "~/.config/matugen/templates/starship.toml"
+output_path = "~/.config/starship.toml"

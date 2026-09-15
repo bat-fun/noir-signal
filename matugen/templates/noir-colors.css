@@ -1,7 +1,7 @@
 :root {
     --noir-bg: {{colors.background.dark.hex}};
-    --noir-surface: {{colors.surface_container_low.dark.hex}};
-    --noir-surface-alt: {{colors.surface_container.dark.hex}};
+    --noir-surface: {{colors.surface_container_lowest.dark.hex}};
+    --noir-surface-alt: {{colors.surface_container_high.dark.hex}};
 
     --noir-text: {{colors.on_background.dark.hex}};
     --noir-muted: {{colors.on_surface_variant.dark.hex}};
@@ -12,4 +12,5 @@
 
     --noir-danger: {{colors.error.dark.hex}};
     --noir-outline: {{colors.outline.dark.hex}};
+    --noir-signal: {{colors.primary_container.dark.hex}};
 }
