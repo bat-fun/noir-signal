@@ -17,7 +17,7 @@ hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("~/.config/hypr/scripts/contr
 hl.bind(mainMod .. " + SHIFT + H", hl.dsp.exec_cmd("kitty --title 'System Check' sh -c '~/.config/hypr/scripts/system-check; printf '\\\nPress Enter to close...'; read -r'"))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("pkill waybar && waybar"))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
-hl.bind(mainMod .. " + X", hl.dsp.exec_cmd("wlogout"))
+hl.bind(mainMod .. " + X", hl.dsp.exec_cmd("wlogout -l ~/.config/wlogout/layout -C ~/.config/wlogout/style.css"))
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch exit"))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper-picker"))
 

@@ -32,3 +32,7 @@ output_path = "~/.config/dunst/dunstrc"
 [templates.starship]
 input_path = "~/.config/matugen/templates/starship.toml"
 output_path = "~/.config/starship.toml"
+
+[templates.wlogout]
+input_path = "~/.config/matugen/templates/wlogout.css"
+output_path = "~/.config/wlogout/style.css"

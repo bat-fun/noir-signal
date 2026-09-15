@@ -578,6 +578,7 @@ prepare_stage() {
     cp -a -- "$REPO_ROOT/rofi" "$STAGING_DIR/config/rofi"
     cp -a -- "$REPO_ROOT/waybar" "$STAGING_DIR/config/waybar"
     cp -a -- "$REPO_ROOT/dunst" "$STAGING_DIR/config/dunst"
+    cp -a -- "$REPO_ROOT/wlogout" "$STAGING_DIR/config/wlogout"
     cp -a -- "$REPO_ROOT/starship.toml" "$STAGING_DIR/config/starship.toml"
 
     success "Configuration staged."
@@ -617,7 +618,10 @@ validate_stage() {
         "$STAGING_DIR/config/matugen/templates/rofi-colors.rasi"
         "$STAGING_DIR/config/matugen/templates/waybar-colors.css"
         "$STAGING_DIR/config/rofi/config.rasi"
+        "$STAGING_DIR/config/rofi/control-panel.rasi"
         "$STAGING_DIR/config/rofi/noir-signal-wallpaper.rasi"
+        "$STAGING_DIR/config/wlogout/layout"
+        "$STAGING_DIR/config/wlogout/style.css"
         "$STAGING_DIR/config/waybar/config.jsonc"
         "$STAGING_DIR/config/waybar/style.css"
         "$STAGING_DIR/config/dunst/dunstrc"
