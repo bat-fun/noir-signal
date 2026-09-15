@@ -25,6 +25,11 @@ WALLPAPER_DIR="$HOME/Pictures/wallpaper"
 ROFI_THEME="$HOME/.config/rofi/noir-signal-wallpaper.rasi"
 CACHE_FILE="$HOME/.cache/noir-signal-wallpaper"
 
+CURRENT_WALLPAPER=""
+if [[ -s "$CACHE_FILE" ]]; then
+    CURRENT_WALLPAPER="$(<"$CACHE_FILE")"
+fi
+
 mapfile -d '' -t WALLPAPERS < <(
     find "$WALLPAPER_DIR" -maxdepth 1 -type f \
         \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) \
@@ -145,9 +150,17 @@ SELECTED=$(for wallpaper in "${OPTIONS[@]}"; do
         *$'\n'*) continue ;;
     esac
     if [ "$wallpaper" = "Random" ]; then
-        printf '%s\0icon\x1f%s\n' "$wallpaper" "preferences-desktop-wallpaper"
+        printf '%s\0icon\x1f%s\0display\x1f%s\0urgent\x1ftrue\n' \
+            "$wallpaper" "preferences-desktop-wallpaper" "Random wallpaper"
     else
-        printf '%s\0icon\x1f%s\n' "$wallpaper" "$WALLPAPER_DIR/$wallpaper"
+        label="${wallpaper%.*}"
+        label="${label//-/ }"
+        display="$label"
+        if [[ "$CURRENT_WALLPAPER" == "$WALLPAPER_DIR/$wallpaper" ]]; then
+            display="✓ $label"
+        fi
+        printf '%s\0icon\x1f%s\0display\x1f%s\n' \
+            "$wallpaper" "$WALLPAPER_DIR/$wallpaper" "$display"
     fi
 done | rofi -dmenu -i -p "Wallpaper" -theme "$ROFI_THEME")
 

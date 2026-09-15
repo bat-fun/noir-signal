@@ -20,9 +20,9 @@ configuration {
 }
 
 window {
-    width: 760px;
+    width: 90%;
     border: 1px;
-    border-color: #3A342A;
+    border-color: @noir-outline;
     border-radius: 16px;
     background-color: @bg;
     padding: 18px;
@@ -40,7 +40,7 @@ inputbar {
     padding: 10px 12px;
     background-color: @surface;
     border: 1px;
-    border-color: #3A342A;
+    border-color: @noir-outline;
     border-radius: 10px;
 
     children: [
@@ -61,7 +61,7 @@ entry {
 }
 
 listview {
-    columns: 4;
+    columns: 5;
     lines: 3;
     spacing: 8px;
     scrollbar: true;
@@ -75,6 +75,12 @@ element {
     background-color: @surface;
 }
 
+element urgent {
+    background-color: @surface-alt;
+    border: 1px;
+    border-color: @accent;
+}
+
 element selected {
     background-color: @surface-alt;
     border: 1px;
@@ -83,7 +89,7 @@ element selected {
 }
 
 element-icon {
-    size: 150px;
+    size: 156px;
     horizontal-align: 0.5;
 }
 
@@ -95,4 +101,9 @@ element-text {
 
 element selected element-text {
     text-color: @accent;
+}
+
+element urgent element-text {
+    text-color: @accent;
+    font-weight: bold;
 }
