@@ -16,14 +16,14 @@ configuration {
 }
 
 * {
-    bg:         #090A0C;
-    surface:    #111318;
-    surface-alt: #181B21;
+    bg:         @noir-bg;
+    surface:    @noir-surface;
+    surface-alt: @noir-surface-alt;
 
-    text:       #E7E4DC;
+    text:       @noir-text;
     muted:      @noir-muted;
     accent:     @noir-accent;
-    danger:     #C46D6D;
+    danger:     @noir-danger;
 
     background-color: transparent;
     text-color: @text;

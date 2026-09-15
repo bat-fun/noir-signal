@@ -1,3 +1,5 @@
+@import "~/.cache/noir-signal/rofi-colors.rasi"
+
 configuration {
     show-icons: true;
     kb-cancel: "Escape";
@@ -5,12 +7,12 @@ configuration {
 }
 
 * {
-    bg: #090A0C;
-    surface: #111318;
-    surface-alt: #181B21;
-    text: #E7E4DC;
-    muted: #777B82;
-    accent: #D6A85F;
+    bg: @noir-bg;
+    surface: @noir-surface;
+    surface-alt: @noir-surface-alt;
+    text: @noir-text;
+    muted: @noir-muted;
+    accent: @noir-accent;
 
     font: "JetBrainsMono Nerd Font 10";
     text-color: @text;

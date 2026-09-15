@@ -15,9 +15,9 @@
    ========================================================= */
 
 window#waybar {
-    background: rgba(9, 10, 12, 0.82);
+    background: alpha(@noir_bg, 0.86);
 
-    border: 1px solid @noir_outline;
+    border: 1px solid alpha(@noir_outline, 0.82);
     border-radius: 11px;
     padding: 0 9px;
     margin: 0;
@@ -30,9 +30,12 @@ window#waybar {
 
 #custom-arch {
     margin-left: 16px;
-    margin-right: 12px;
+    margin-right: 10px;
+    padding: 0 9px;
 
     color: @noir_accent;
+    background: alpha(@noir_accent, 0.12);
+    border-radius: 7px;
 
     font-size: 14px;
     font-weight: 700;
@@ -42,6 +45,7 @@ window#waybar {
 
 #custom-arch:hover {
     color: #E7E4DC;
+    background: alpha(@noir_accent, 0.2);
     opacity: 0.92;
 }
 
@@ -90,6 +94,7 @@ window#waybar {
 
 #window {
     margin: 0 28px;
+    min-width: 180px;
 
     color: @noir_text;
 
@@ -110,6 +115,7 @@ window#waybar {
 #bluetooth,
 #pulseaudio {
     margin-right: 18px;
+    padding: 0 3px;
 
     color: @noir_muted;
 
@@ -121,6 +127,7 @@ window#waybar {
 
 #network:hover {
     color: #E7E4DC;
+    text-shadow: 0 0 8px alpha(@noir_text, 0.3);
 }
 
 #network.disconnected {
@@ -153,6 +160,7 @@ window#waybar {
 
 #pulseaudio:hover {
     color: #E7E4DC;
+    text-shadow: 0 0 8px alpha(@noir_text, 0.3);
 }
 
 #pulseaudio.muted {
@@ -166,6 +174,8 @@ window#waybar {
 
 #clock {
     margin-right: 18px;
+    padding-left: 16px;
+    border-left: 1px solid alpha(@noir_outline, 0.9);
 
     color: @noir_accent;
     text-shadow: 0 0 10px alpha(@noir_accent, 0.35);
