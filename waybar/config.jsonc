@@ -15,12 +15,12 @@
     ],
 
     "modules-right": [
-        "custom/control",
         "network",
         "bluetooth",
         "pulseaudio",
         "battery",
-        "clock"
+        "clock",
+        "custom/control"
     ],
 
     "custom/arch": {
@@ -109,7 +109,7 @@
     },
 
     "clock": {
-        "format": "{:%H:%M}",
+        "format": "{:%I:%M %p}",
         "tooltip-format": "{:%A · %d %B %Y}"
     },
 
