@@ -80,7 +80,7 @@ The configuration is modular, transparent, and meant to be changed.
 | **Hyprlock**   | Minimal lock screen                             |
 | **Starship**   | Compact shell prompt                            |
 | **Workflows**  | Clipboard, screenshots, media & system controls |
-| **Wallpapers** | awww transitions + optional collection          |
+| **Wallpapers** | awww transitions using an independent local collection |
 | **Installer**  | Automatic setup with backup & validation        |
 
 ---
@@ -97,7 +97,7 @@ Copy and paste into your terminal:
 git clone https://github.com/bat-fun/noir-signal.git && cd noir-signal && chmod +x install.sh && ./install.sh
 ```
 
-The installer checks your system, installs dependencies, backs up existing configuration, installs Noir Signal, optionally installs wallpapers, generates the initial theme, and validates the result.
+The installer checks your system, installs dependencies, backs up existing configuration, installs Noir Signal, uses any wallpapers already in `~/Pictures/wallpaper`, generates the initial theme, and validates the result.
 
 Want to see what it will do first?
 
@@ -183,13 +183,15 @@ Change the wallpaper.
 
 ## WALLPAPERS
 
-Noir Signal does not force a wallpaper collection.
-
-Use your own:
+Wallpaper files are independent from the Noir Signal repository and are never
+downloaded or managed by its installer. Use your own collection, or manage the
+separate wallpaper repository independently:
 
 ```text
 ~/Pictures/wallpaper
 ```
+
+Noir Signal only reads supported image files from that directory at runtime.
 
 Or let the installer add the optional Noir Signal collection.
 

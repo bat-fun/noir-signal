@@ -21,18 +21,14 @@ CONFIG_DIR="$HOME/.config"
 STATE_DIR="$HOME/.local/state/noir-signal"
 BACKUP_ROOT="$STATE_DIR/backups"
 WALLPAPER_DIR="$HOME/Pictures/wallpaper"
-WALLPAPER_REPO="https://github.com/bat-fun/wallpaper.git"
 
 DRY_RUN=0
-SKIP_WALLPAPERS=0
-FORCE_WALLPAPERS=0
 CURRENT_PHASE="initialization"
 BACKUP_DIR=""
 STAGING_DIR=""
 INSTALL_STARTED=0
 BACKUP_CREATED=0
 ROLLBACK_IN_PROGRESS=0
-WALLPAPER_SETUP=0
 THEME_GENERATED=0
 THEME_SKIPPED=0
 
@@ -141,13 +137,10 @@ Usage:
 
 Options:
   --dry-run         Preview package/config changes without modifying the system
-  --no-wallpapers   Skip the optional Noir Signal wallpaper collection
-  --wallpapers      Install the Noir Signal wallpaper collection without asking
   -h, --help        Show this help
 
 The normal installation installs the complete Noir Signal daily-driver stack.
-Applications and configuration use Noir Signal defaults; there is no profile
-selection menu.
+Wallpapers are independent and must already exist in ~/Pictures/wallpaper.
 USAGE
 }
 
@@ -156,12 +149,6 @@ parse_args() {
         case "$1" in
             --dry-run)
                 DRY_RUN=1
-                ;;
-            --no-wallpapers)
-                SKIP_WALLPAPERS=1
-                ;;
-            --wallpapers)
-                FORCE_WALLPAPERS=1
                 ;;
             -h|--help)
                 usage
@@ -176,10 +163,6 @@ parse_args() {
         shift
     done
 
-    if [[ "$SKIP_WALLPAPERS" -eq 1 && "$FORCE_WALLPAPERS" -eq 1 ]]; then
-        printf '%sError:%s --no-wallpapers and --wallpapers cannot be used together.\n' "$C_RED" "$C_RESET" >&2
-        exit 2
-    fi
 }
 
 init_logging() {
@@ -756,85 +739,6 @@ wallpaper_count() {
     \) -print | wc -l
 }
 
-ask_wallpapers() {
-    [[ "$SKIP_WALLPAPERS" -eq 1 ]] && return 1
-    [[ "$FORCE_WALLPAPERS" -eq 1 ]] && return 0
-
-    section "NOIR SIGNAL WALLPAPERS"
-    printf '  Optional collection:\n'
-    printf '  %s%s%s\n' "$C_MUTED" "$WALLPAPER_REPO" "$C_RESET"
-
-    if (( $(wallpaper_count) > 0 )); then
-        info "Found $(wallpaper_count) existing wallpaper(s) in $WALLPAPER_DIR."
-        info "Existing wallpapers will never be overwritten."
-    fi
-
-    confirm "Install the Noir Signal wallpaper collection?"
-}
-
-install_wallpapers() {
-    CURRENT_PHASE="wallpaper installation"
-
-    section "WALLPAPERS"
-
-    if [[ "$DRY_RUN" -eq 1 ]]; then
-        info "Would clone the wallpaper repository into a temporary directory."
-        info "Would copy supported images into $WALLPAPER_DIR."
-        return 0
-    fi
-
-    mkdir -p -- "$WALLPAPER_DIR"
-
-    local tmp_repo
-    tmp_repo="$(mktemp -d -t noir-signal-wallpaper.XXXXXX)"
-
-    # We deliberately do not leave the wallpaper repository itself in the
-    # user's wallpaper directory. Only supported image files are copied.
-    if ! git clone --depth 1 --quiet "$WALLPAPER_REPO" "$tmp_repo/repo"; then
-        rm -rf -- "$tmp_repo"
-        warn "Could not download the Noir Signal wallpaper collection."
-        warn "Core Noir Signal installation will continue."
-        return 0
-    fi
-
-    local -a images=()
-    mapfile -d '' images < <(
-        find "$tmp_repo/repo" -type f \( \
-            -iname '*.jpg' -o \
-            -iname '*.jpeg' -o \
-            -iname '*.png' -o \
-            -iname '*.webp' \
-        \) -print0
-    )
-
-    if [[ "${#images[@]}" -eq 0 ]]; then
-        rm -rf -- "$tmp_repo"
-        warn "The wallpaper repository contains no supported images."
-        return 0
-    fi
-
-    local copied=0 skipped=0 source filename destination
-
-    for source in "${images[@]}"; do
-        filename="$(basename -- "$source")"
-        destination="$WALLPAPER_DIR/$filename"
-
-        if [[ -e "$destination" || -L "$destination" ]]; then
-            skipped=$((skipped + 1))
-            continue
-        fi
-
-        cp -a -- "$source" "$destination"
-        copied=$((copied + 1))
-    done
-
-    rm -rf -- "$tmp_repo"
-    WALLPAPER_SETUP=1
-
-    success "$copied wallpaper(s) installed."
-    [[ "$skipped" -gt 0 ]] && info "$skipped existing wallpaper(s) preserved."
-}
-
 select_initial_wallpaper() {
     CURRENT_PHASE="initial wallpaper selection"
 
@@ -1225,11 +1129,7 @@ show_final_summary() {
     printf '  ✓ Logout menu\n'
 
     printf '\n%sWALLPAPERS%s\n' "$C_TEXT" "$C_RESET"
-    if [[ "$WALLPAPER_SETUP" -eq 1 ]]; then
-        printf '  ✓ Noir Signal wallpaper collection installed\n'
-    else
-        printf '  ! Wallpaper collection skipped\n'
-    fi
+    printf '  ✓ Uses independent local collection: %s\n' "$WALLPAPER_DIR"
 
     printf '\n%sBACKUP%s\n' "$C_TEXT" "$C_RESET"
     if [[ -n "$BACKUP_DIR" ]]; then
@@ -1280,14 +1180,7 @@ main() {
     set_script_permissions
     validate_installed_commands
 
-    if ask_wallpapers; then
-        install_wallpapers
-    else
-        info "Skipping Noir Signal wallpaper collection."
-    fi
-
-    # The installer can use either the newly installed collection or the
-    # user's existing wallpaper directory for initial theme generation.
+    # The installer uses only the user's independent local wallpaper directory.
     if [[ "$DRY_RUN" -eq 1 ]]; then
         bootstrap_theme
     elif [[ -d "$WALLPAPER_DIR" ]] && (( $(wallpaper_count) > 0 )); then
