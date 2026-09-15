@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+failures=0
+
+pass() {
+    printf '[ OK ] %s\n' "$1"
+}
+
+warn() {
+    printf '[WARN] %s\n' "$1"
+}
+
+fail() {
+    printf '[FAIL] %s\n' "$1"
+    failures=$((failures + 1))
+}
+
+check_command() {
+    local command="$1"
+    if command -v "$command" >/dev/null 2>&1; then
+        pass "command: $command"
+    else
+        fail "command missing: $command"
+    fi
+}
+
+check_service() {
+    local service="$1"
+    if systemctl --user is-active --quiet "$service" 2>/dev/null || systemctl is-active --quiet "$service" 2>/dev/null; then
+        pass "service: $service"
+    else
+        fail "service inactive: $service"
+    fi
+}
+
+printf 'NOIR SIGNAL SYSTEM CHECK\n\n'
+
+for command in hyprctl waybar dunst rofi kitty starship matugen grim notify-send; do
+    check_command "$command"
+done
+
+printf '\nProcesses\n'
+for process in Hyprland waybar dunst awww-daemon; do
+    if pgrep -x "$process" >/dev/null 2>&1; then
+        pass "process: $process"
+    else
+        fail "process missing: $process"
+    fi
+done
+
+printf '\nServices\n'
+for service in pipewire.service pipewire-pulse.service wireplumber.service; do
+    check_service "$service"
+done
+
+for service in upower rtkit-daemon; do
+    if systemctl is-active --quiet "$service" 2>/dev/null; then
+        pass "system service: $service"
+    else
+        warn "system service inactive: $service"
+    fi
+done
+
+printf '\nConfiguration parsers\n'
+waybar_log="$(mktemp)"
+timeout 3s waybar -c "$HOME/.config/waybar/config.jsonc" -s "$HOME/.config/waybar/style.css" >"$waybar_log" 2>&1 || true
+if grep -q 'Bar configured' "$waybar_log"; then
+    pass 'Waybar configuration'
+else
+    fail 'Waybar configuration'
+fi
+rm -f "$waybar_log"
+
+if rofi -config "$HOME/.config/rofi/config.rasi" -dump-theme >/dev/null 2>&1 && rofi -config "$HOME/.config/rofi/noir-signal-wallpaper.rasi" -dump-theme >/dev/null 2>&1; then
+    pass 'Rofi themes'
+else
+    fail 'Rofi themes'
+fi
+
+if STARSHIP_CONFIG="$HOME/.config/starship.toml" starship print-config >/dev/null 2>&1; then
+    pass 'Starship configuration'
+else
+    fail 'Starship configuration'
+fi
+
+if kitty -c "$HOME/.config/kitty/kitty.conf" +runpy 'pass' >/dev/null 2>&1; then
+    pass 'Kitty configuration'
+else
+    fail 'Kitty configuration'
+fi
+
+printf '\nDynamic theme outputs\n'
+for file in "$HOME/.cache/noir-signal/colors.css" "$HOME/.cache/noir-signal/kitty-colors.conf" "$HOME/.cache/noir-signal/rofi-colors.rasi" "$HOME/.cache/noir-signal/hyprland-colors.lua" "$HOME/.cache/noir-signal/hyprlock-colors.conf" "$HOME/.config/waybar/waybar-colors.css" "$HOME/.config/dunst/dunstrc"; do
+    if [[ -s "$file" ]]; then
+        pass "generated: ${file##*/}"
+    else
+        fail "generated file missing: $file"
+    fi
+done
+
+printf '\nResult\n'
+if ((failures)); then
+    printf '%d check(s) failed.\n' "$failures"
+    exit 1
+fi
+
+printf 'All required checks passed.\n'
