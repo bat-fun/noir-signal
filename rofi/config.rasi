@@ -32,18 +32,19 @@ configuration {
 }
 
 window {
-    width: 40%;
+    width: 520px;
+    height: 480px;
     border: 1px;
-    border-color: #2A2D32;
-    border-radius: 12px;
+    border-color: @noir-outline;
+    border-radius: 16px;
 
     background-color: @bg;
 
-    padding: 18px;
+    padding: 20px;
 }
 
 mainbox {
-    spacing: 14px;
+    spacing: 16px;
     children: [
         inputbar,
         listview
@@ -51,12 +52,12 @@ mainbox {
 }
 
 inputbar {
-    padding: 10px 12px;
+    padding: 12px 14px;
 
     background-color: @surface;
     border: 1px;
-    border-color: #252930;
-    border-radius: 8px;
+    border-color: @noir-outline;
+    border-radius: 10px;
 
     children: [
         prompt,
@@ -80,15 +81,15 @@ entry {
 
 listview {
     columns: 1;
-    lines: 5;
+    lines: 6;
 
-    spacing: 4px;
+    spacing: 5px;
     scrollbar: false;
 }
 
 element {
-    padding: 10px 12px;
-    border-radius: 7px;
+    padding: 11px 13px;
+    border-radius: 9px;
 
     background-color: transparent;
 }
@@ -105,6 +106,8 @@ element-text {
 
 element selected {
     background-color: @surface-alt;
+    border: 1px;
+    border-color: @accent;
 }
 
 element selected element-text {

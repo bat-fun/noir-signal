@@ -1,6 +1,7 @@
 # Generated Matugen output
 .cache/
 waybar/waybar-colors.css
+!waybar/waybar-colors.css
 
 # Logs
 *.log
