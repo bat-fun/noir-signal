@@ -1,85 +1,174 @@
 # NOIR SIGNAL
 
-A dark cinematic Hyprland rice built from scratch.
+### A dark cinematic Hyprland rice.
 
-Warm amber accents, restrained typography, dynamic wallpaper-driven colors, and a modular configuration designed for daily use.
+**Quiet UI. Warm signal. Zero clutter.**
 
-## Preview
+Built from scratch for Arch Linux + Hyprland.
 
-> Screenshots coming soon.
+![Noir Signal](screenshots/desktop.png)
 
-## Features
+---
 
-- Hyprland with modular Lua configuration
-- Dark cinematic visual system
-- Dynamic wallpaper-driven colors with Matugen
-- Waybar
-- Rofi application launcher
-- Rofi wallpaper picker
-- Kitty terminal
-- Starship prompt
-- Hyprlock
-- Clipboard history with cliphist
-- Screenshot workflow
-- Workspace and window management
-- Audio, media, brightness, and system controls
+## THE IDEA
 
-## Requirements
+Noir Signal is a personal Linux desktop built around **restraint**.
 
-Designed primarily for:
+Dark surfaces.
+Warm amber accents.
+Wallpaper-driven colors.
+Minimal information.
+Nothing exists just to fill space.
 
-- Arch Linux
-- Hyprland
-- Waybar
-- Rofi
-- Matugen
-- Kitty
-- Starship
-- Hyprlock
+The configuration is modular, transparent, and meant to be changed.
 
-Additional dependencies are used by individual features and keybindings.
+---
 
-## Installation
+## FEATURES
 
-Clone the repository:
+|                |                                                 |
+| -------------- | ----------------------------------------------- |
+| **Hyprland**   | Modular Lua configuration                       |
+| **Matugen**    | Wallpaper-driven dynamic colors                 |
+| **Waybar**     | Minimal system bar                              |
+| **Rofi**       | Application + wallpaper launchers               |
+| **Kitty**      | Terminal with matching palette                  |
+| **Hyprlock**   | Minimal lock screen                             |
+| **Starship**   | Compact shell prompt                            |
+| **Workflows**  | Clipboard, screenshots, media & system controls |
+| **Wallpapers** | awww transitions + optional collection          |
+| **Installer**  | Automatic setup with backup & validation        |
+
+---
+
+## INSTALLATION
+
+### AUTOMATIC
+
+**Recommended. One command.**
+
+Copy and paste into your terminal:
+
+```bash
+git clone https://github.com/bat-fun/noir-signal.git && cd noir-signal && chmod +x install.sh && ./install.sh
+```
+
+The installer checks your system, installs dependencies, backs up existing configuration, installs Noir Signal, optionally installs wallpapers, generates the initial theme, and validates the result.
+
+Want to see what it will do first?
+
+```bash
+git clone https://github.com/bat-fun/noir-signal.git && cd noir-signal && chmod +x install.sh && ./install.sh --dry-run
+```
+
+### MANUAL
+
+For users who want complete control.
 
 ```bash
 git clone https://github.com/bat-fun/noir-signal.git
 cd noir-signal
 ```
 
-Back up your existing configuration before installing.
+Back up your existing configuration, then install the required dependencies using your preferred Arch Linux workflow.
 
-Copy the configuration directories into `~/.config`:
+Copy the configuration:
 
 ```bash
 cp -r hypr kitty matugen rofi waybar ~/.config/
 cp starship.toml ~/.config/
-```
-
-Make the scripts executable:
-
-```bash
 chmod +x ~/.config/hypr/scripts/*
 ```
 
-Place your wallpapers in:
+Create the wallpaper directory:
+
+```bash
+mkdir -p ~/Pictures/wallpaper
+```
+
+Then place your wallpapers in:
 
 ```text
 ~/Pictures/wallpaper
 ```
 
-Then review the configuration and adjust:
+---
 
-- `hypr/module/programs.lua` — application commands
-- `hypr/module/monitors.lua` — monitor configuration
-- `hypr/module/binds.lua` — keybindings
-- `matugen/config.toml` — generated color outputs
-- `starship.toml` — shell prompt
+## DYNAMIC THEME
 
-Noir Signal assumes the required applications and dependencies are installed on your system. Review the **Requirements** section before starting Hyprland.
+Your wallpaper becomes the color source for the entire desktop.
 
-## Structure
+```text
+        WALLPAPER
+            │
+            ▼
+         MATUGEN
+            │
+            ▼
+       COLOR PALETTE
+            │
+     ┌──────┼──────┐
+     ▼      ▼      ▼
+ Hyprland Waybar  Kitty
+     │      │      │
+     └──────┼──────┘
+            ▼
+       Rofi · Hyprlock
+```
+
+Change the wallpaper.
+
+**The desktop changes with it.**
+
+---
+
+## WALLPAPERS
+
+Noir Signal does not force a wallpaper collection.
+
+Use your own:
+
+```text
+~/Pictures/wallpaper
+```
+
+Or let the installer add the optional Noir Signal collection.
+
+Existing wallpapers are preserved.
+
+---
+
+## KEYBINDS
+
+The default modifier is `SUPER`.
+
+| Key                  | Action               |
+| -------------------- | -------------------- |
+| `SUPER + Enter`      | Terminal             |
+| `SUPER + A`          | Application launcher |
+| `SUPER + B`          | Browser              |
+| `SUPER + C`          | Code - OSS           |
+| `SUPER + E`          | File manager         |
+| `SUPER + Q`          | Close window         |
+| `SUPER + L`          | Lock screen          |
+| `SUPER + R`          | Random wallpaper     |
+| `SUPER + D`          | Wallpaper picker     |
+| `SUPER + V`          | Clipboard picker     |
+| `SUPER + Shift + V`  | Clear clipboard      |
+| `SUPER + X`          | Logout menu          |
+| `SUPER + Arrow Keys` | Move focus           |
+| `SUPER + 1–9`        | Workspace            |
+| `SUPER + 0`          | Workspace 10         |
+| `Print`              | Area screenshot      |
+| `Shift + Print`      | Full screenshot      |
+
+Additional controls are defined in `hypr/module/binds.lua`.
+
+---
+
+## CONFIGURATION
+
+Everything is intentionally exposed.
 
 ```text
 noir-signal/
@@ -88,120 +177,60 @@ noir-signal/
 │   ├── hyprlock.conf
 │   ├── module/
 │   └── scripts/
-├── waybar/
-├── rofi/
+├── kitty/
 ├── matugen/
 │   └── templates/
-├── kitty/
-└── starship.toml
+├── rofi/
+├── waybar/
+├── starship.toml
+├── install.sh
+├── LICENSE
+└── README.md
 ```
 
-The Hyprland configuration uses small, purpose-specific Lua modules:
+Start customizing here:
 
 ```text
-module/
-├── animations.lua
-├── binds.lua
-├── decoration.lua
-├── input.lua
-├── layout.lua
-├── monitors.lua
-├── programs.lua
-├── rules.lua
-├── startup.lua
-├── theme.lua
-└── workspaces.lua
+hypr/module/programs.lua
+hypr/module/monitors.lua
+hypr/module/binds.lua
+hypr/module/decoration.lua
+hypr/module/animations.lua
+matugen/templates/
 ```
 
-## Dynamic Theming
+---
 
-Noir Signal uses Matugen to derive colors from the current wallpaper.
+## REQUIREMENTS
 
-```text
-Wallpaper
-    ↓
-  Matugen
-    ↓
-Color palette
-    ↓
-Hyprland · Waybar · Kitty · Rofi · Hyprlock
-```
+**Arch Linux + Hyprland**
 
-Wallpaper assets are not included in this repository.
+The automatic installer handles the required desktop components and supporting tools, including:
 
-Place your own wallpapers in:
+`Hyprland` · `Hyprlock` · `Waybar` · `Rofi` · `Kitty` · `Matugen` · `Starship` · `Thunar` · `Brave` · `Code - OSS` · `awww` · `cliphist` · `grim` · `slurp` · `playerctl` · `PipeWire` · `NetworkManager` · `Blueman` · `brightnessctl` · `wlogout`
 
-```text
-~/Pictures/wallpaper
-```
+---
 
-## Customization
+## PHILOSOPHY
 
-Noir Signal is designed to be modified.
+Noir Signal is not designed to be everything.
 
-Start with:
+It is designed to be **enough**.
 
-- `hypr/module/programs.lua` — application commands
-- `hypr/module/binds.lua` — keybindings
-- `hypr/module/monitors.lua` — monitor configuration
-- `hypr/module/decoration.lua` — window appearance
-- `hypr/module/animations.lua` — animations
-- `hypr/module/theme.lua` — theme configuration
-- `matugen/templates/` — generated color templates
+No giant widget stack.
+No unnecessary effects.
+No bloated framework.
 
-## Keybindings
+Just a desktop that stays out of the way.
 
-The default modifier is `SUPER`.
+---
 
-| Key                   | Action                           |
-| --------------------- | -------------------------------- |
-| `SUPER + Enter`       | Open terminal                    |
-| `SUPER + E`           | Open file manager                |
-| `SUPER + A`           | Application launcher             |
-| `SUPER + B`           | Open browser                     |
-| `SUPER + C`           | Open Code - OSS                  |
-| `SUPER + Q`           | Close active window              |
-| `SUPER + L`           | Lock screen                      |
-| `SUPER + R`           | Random wallpaper                 |
-| `SUPER + D`           | Wallpaper picker                 |
-| `SUPER + V`           | Clipboard picker                 |
-| `SUPER + Shift + V`   | Clear clipboard history          |
-| `SUPER + W`           | Restart Waybar                   |
-| `SUPER + X`           | Open logout menu                 |
-| `SUPER + M`           | Exit Hyprland / shutdown         |
-| `SUPER + Space`       | Toggle floating                  |
-| `SUPER + P`           | Toggle pseudo-tile               |
-| `SUPER + J`           | Toggle split                     |
-| `SUPER + S`           | Toggle special workspace         |
-| `SUPER + Shift + S`   | Move window to special workspace |
-| `SUPER + Arrow Keys`  | Move focus                       |
-| `SUPER + 1–9`         | Switch workspace                 |
-| `SUPER + 0`           | Switch to workspace 10           |
-| `SUPER + Shift + 1–9` | Move window to workspace         |
-| `SUPER + Shift + 0`   | Move window to workspace 10      |
-| `SUPER + Mouse Left`  | Move window                      |
-| `SUPER + Mouse Right` | Resize window                    |
-| `Print`               | Screenshot selected area         |
-| `Shift + Print`       | Full-screen screenshot           |
-| `Volume Keys`         | Control volume                   |
-| `Brightness Keys`     | Control brightness               |
-| `Media Keys`          | Control media playback           |
-
-## Known Limitations
-
-- Primarily designed for Arch Linux.
-- Some application bindings assume Brave, Code - OSS, and Thunar.
-- Wallpaper-driven colors require Matugen.
-- Clipboard history requires cliphist and wl-clipboard.
-- Wallpaper assets are not included.
-- Some hardware-specific controls may require additional packages.
-
-## Credits
+## CREDITS
 
 Noir Signal is an original configuration built from scratch.
 
-The project was initially inspired by the visual direction and experimentation found in `bat-fun/batcave-hyprland`, but Noir Signal is independently structured and configured.
+The project was initially inspired by the visual direction and experimentation of [`bat-fun/batcave-hyprland`](https://github.com/bat-fun/batcave-hyprland), but Noir Signal is independently structured and configured.
 
-## License
+## LICENSE
 
-MIT License. See [LICENSE](LICENSE).
+MIT
