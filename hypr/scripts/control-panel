@@ -13,7 +13,7 @@ menu+=$'Wallpaper picker\n'
 menu+=$'Lock screen\n'
 menu+=$'Power menu'
 
-choice=$(printf '%s' "$menu" | rofi -dmenu -i -p 'Control' -config "$HOME/.config/rofi/config.rasi")
+choice=$(printf '%s' "$menu" | rofi -dmenu -i -p 'Control' -theme "$HOME/.config/rofi/control-panel.rasi")
 
 case "$choice" in
     Network) nm-connection-editor ;;
