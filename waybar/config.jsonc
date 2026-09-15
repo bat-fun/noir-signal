@@ -16,7 +16,6 @@
 
     "modules-right": [
         "custom/control",
-        "tray",
         "network",
         "bluetooth",
         "pulseaudio",
