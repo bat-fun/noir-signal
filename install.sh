@@ -973,6 +973,11 @@ bootstrap_theme() {
         success "Waybar theme reloaded."
     fi
 
+    if pgrep -x dunst >/dev/null 2>&1; then
+        killall -HUP dunst 2>/dev/null || true
+        success "Dunst theme reloaded."
+    fi
+
     if pgrep -x kitty >/dev/null 2>&1; then
         while read -r pid; do
             kill -SIGUSR1 "$pid" 2>/dev/null || true
