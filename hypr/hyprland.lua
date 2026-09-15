@@ -1,4 +1,4 @@
--- Noir Signal v0.1
+-- Rice v0.1
 -- Personal Hyprland rice: dark cinematic UI, warm amber accent.
 -- Hyprland 0.56+ / Lua configuration.
 

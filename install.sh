@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-# Noir Signal installer
+# Rice installer
 # Opinionated daily-driver installation for Arch Linux + Hyprland.
 #
 # Design goals:
 #   - Safe by default: backups before config replacement.
-#   - Deterministic: installs the complete Noir Signal stack.
+#   - Deterministic: installs the complete Rice stack.
 #   - Dynamic: detects the current system and only installs what is missing.
 #   - Recoverable: failed configuration installs restore the previous state.
 #   - Self-contained: one script, no installer framework.
@@ -32,7 +32,7 @@ ROLLBACK_IN_PROGRESS=0
 THEME_GENERATED=0
 THEME_SKIPPED=0
 
-# Package groups. These are the packages Noir Signal itself expects.
+# Package groups. These are the packages Rice itself expects.
 # AUR packages are kept explicit because we know they are AUR targets;
 # everything else is verified against the local official Arch package DB.
 CORE_PACKAGES=(
@@ -133,7 +133,7 @@ log_file=""
 
 usage() {
     cat <<USAGE
-Noir Signal Installer
+Rice Installer
 
 Usage:
   ./install.sh [options]
@@ -142,7 +142,7 @@ Options:
   --dry-run         Preview package/config changes without modifying the system
   -h, --help        Show this help
 
-The normal installation installs the complete Noir Signal daily-driver stack.
+The normal installation installs the complete Rice daily-driver stack.
 Wallpapers are independent and must already exist in ~/Pictures/wallpaper.
 USAGE
 }
@@ -182,7 +182,7 @@ init_logging() {
 print_banner() {
     printf '\n'
     printf '%s╭──────────────────────────────────────────────────────╮%s\n' "$C_AMBER" "$C_RESET"
-    printf '%s│%s                    NOIR SIGNAL                     %s│%s\n' "$C_AMBER" "$C_TEXT" "$C_AMBER" "$C_RESET"
+    printf '%s│%s                       RICE                       %s│%s\n' "$C_AMBER" "$C_TEXT" "$C_AMBER" "$C_RESET"
     printf '%s│%s              installation setup                   %s│%s\n' "$C_AMBER" "$C_MUTED" "$C_AMBER" "$C_RESET"
     printf '%s╰──────────────────────────────────────────────────────╯%s\n' "$C_AMBER" "$C_RESET"
     printf '\n'
@@ -312,7 +312,7 @@ check_environment() {
 
     have_cmd bash || { fail "bash is required."; exit 1; }
     have_cmd sudo || { fail "sudo is required."; exit 1; }
-    have_cmd pacman || { fail "pacman was not found. Noir Signal targets Arch Linux."; exit 1; }
+    have_cmd pacman || { fail "pacman was not found. Rice targets Arch Linux."; exit 1; }
 
     [[ -r /etc/os-release ]] || { fail "Cannot detect the operating system."; exit 1; }
     # shellcheck disable=SC1091
@@ -350,7 +350,7 @@ check_environment() {
     fi
 
     success "Arch Linux detected."
-    success "Noir Signal repository structure verified."
+    success "Rice repository structure verified."
 }
 
 system_summary() {
@@ -511,7 +511,7 @@ create_backup() {
 
     if [[ "$DRY_RUN" -eq 1 ]]; then
         section "BACKUP (DRY RUN)"
-        info "Existing Noir Signal targets would be backed up before replacement."
+        info "Existing Rice targets would be backed up before replacement."
         return 0
     fi
 
@@ -578,6 +578,7 @@ prepare_stage() {
     cp -a -- "$REPO_ROOT/rofi" "$STAGING_DIR/config/rofi"
     cp -a -- "$REPO_ROOT/waybar" "$STAGING_DIR/config/waybar"
     cp -a -- "$REPO_ROOT/dunst" "$STAGING_DIR/config/dunst"
+    cp -a -- "$REPO_ROOT/wlogout" "$STAGING_DIR/config/wlogout"
     cp -a -- "$REPO_ROOT/starship.toml" "$STAGING_DIR/config/starship.toml"
 
     success "Configuration staged."
@@ -617,7 +618,10 @@ validate_stage() {
         "$STAGING_DIR/config/matugen/templates/rofi-colors.rasi"
         "$STAGING_DIR/config/matugen/templates/waybar-colors.css"
         "$STAGING_DIR/config/rofi/config.rasi"
+        "$STAGING_DIR/config/rofi/control-panel.rasi"
         "$STAGING_DIR/config/rofi/noir-signal-wallpaper.rasi"
+        "$STAGING_DIR/config/wlogout/layout"
+        "$STAGING_DIR/config/wlogout/style.css"
         "$STAGING_DIR/config/waybar/config.jsonc"
         "$STAGING_DIR/config/waybar/style.css"
         "$STAGING_DIR/config/dunst/dunstrc"
@@ -632,7 +636,7 @@ validate_stage() {
         }
     done
 
-    success "All expected Noir Signal files are present."
+    success "All expected Rice files are present."
 }
 
 install_packages() {
@@ -675,7 +679,7 @@ install_yay() {
     have_cmd yay && return 0
 
     section "AUR HELPER"
-    info "AUR packages are required for the Noir Signal defaults:"
+    info "AUR packages are required for the Rice defaults:"
     printf '  %s\n' "$(join_by ', ' "${AUR_MISSING[@]}")"
     fail "yay is not installed. Install and review yay separately, then rerun this installer."
     return 1
@@ -771,7 +775,7 @@ write_runtime_wallpaper_cache() {
     local wallpaper="$1"
 
     if [[ "$DRY_RUN" -eq 1 ]]; then
-        info "Would record $wallpaper as the current Noir Signal wallpaper."
+        info "Would record $wallpaper as the current Rice wallpaper."
         return 0
     fi
 
@@ -923,7 +927,7 @@ bootstrap_theme() {
     fi
 
     # Apply the wallpaper only when a Wayland display is available. The same
-    # awww/matugen workflow is used by Noir Signal's existing wallpaper script.
+    # awww/matugen workflow is used by Rice's existing wallpaper script.
     if [[ -n "${WAYLAND_DISPLAY:-}" ]] && have_cmd awww; then
         if have_cmd awww-daemon && ! pgrep -x awww-daemon >/dev/null 2>&1; then
             awww-daemon >/dev/null 2>&1 &
@@ -999,7 +1003,7 @@ validate_installed_commands() {
     section "COMMAND VALIDATION"
 
     if [[ "$DRY_RUN" -eq 1 ]]; then
-        info "Would verify all Noir Signal commands after package installation."
+        info "Would verify all Rice commands after package installation."
         return 0
     fi
 
@@ -1120,7 +1124,7 @@ show_final_summary() {
     CURRENT_PHASE="final summary"
 
     if [[ "$DRY_RUN" -eq 1 ]]; then
-        section "NOIR SIGNAL DRY RUN COMPLETE"
+        section "RICE DRY RUN COMPLETE"
         printf '\n%sPREVIEW%s\n' "$C_TEXT" "$C_RESET"
         printf '  ✓ Repository checks completed\n'
         printf '  ✓ Package resolution plan generated\n'
@@ -1130,11 +1134,11 @@ show_final_summary() {
         return 0
     fi
 
-    section "NOIR SIGNAL COMPLETE"
+    section "RICE COMPLETE"
 
     printf '\n%sSYSTEM%s\n' "$C_TEXT" "$C_RESET"
     printf '  ✓ Arch Linux\n'
-    printf '  ✓ Noir Signal daily-driver configuration\n'
+    printf '  ✓ Rice daily-driver configuration\n'
 
     printf '\n%sAPPLICATIONS%s\n' "$C_TEXT" "$C_RESET"
     printf '  ✓ Kitty\n'
@@ -1201,7 +1205,7 @@ main() {
         warn "No packages, configuration files, wallpapers, or services will be changed."
     else
         printf '\n'
-        confirm "Proceed with the Noir Signal installation?" || {
+        confirm "Proceed with the Rice installation?" || {
             info "Installation cancelled."
             exit 0
         }

@@ -25,6 +25,6 @@ case "$choice" in
     'Brightness down') brightnessctl -e4 -n2 set 5%- ;;
     'Wallpaper picker') "$HOME/.config/hypr/scripts/wallpaper-picker" ;;
     'Lock screen') hyprlock ;;
-    'Power menu') wlogout ;;
+    'Power menu') wlogout -l "$HOME/.config/wlogout/layout" -C "$HOME/.config/wlogout/style.css" ;;
     *) exit 0 ;;
 esac
