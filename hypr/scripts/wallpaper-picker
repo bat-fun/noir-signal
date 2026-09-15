@@ -19,17 +19,17 @@ notify() {
     command -v notify-send >/dev/null 2>&1 && notify-send "$@" || true
 }
 
-require_commands awww matugen hyprctl shuf pgrep killall
+require_commands awww awww-daemon matugen hyprctl shuf pgrep killall
 
 WALLPAPER_DIR="$HOME/Pictures/wallpaper"
 ROFI_THEME="$HOME/.config/rofi/noir-signal-wallpaper.rasi"
 CACHE_FILE="$HOME/.cache/noir-signal-wallpaper"
 
-mapfile -t WALLPAPERS < <(
+mapfile -d '' -t WALLPAPERS < <(
     find "$WALLPAPER_DIR" -maxdepth 1 -type f \
         \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.webp' \) \
-        -printf '%f\n' |
-    sort
+        -printf '%f\0' |
+    sort -z
 )
 
 if [ "${#WALLPAPERS[@]}" -eq 0 ]; then
@@ -101,6 +101,19 @@ apply_wallpaper() {
         "$selected"
 }
 
+if ! pgrep -x awww-daemon >/dev/null 2>&1; then
+    awww-daemon >/dev/null 2>&1 &
+    for _ in {1..20}; do
+        pgrep -x awww-daemon >/dev/null 2>&1 && break
+        sleep 0.1
+    done
+fi
+
+if ! pgrep -x awww-daemon >/dev/null 2>&1; then
+    notify "Wallpaper Picker" "Could not start wallpaper daemon"
+    exit 1
+fi
+
 # ---------------------------------------------------------
 # Direct random mode
 # ---------------------------------------------------------
@@ -123,26 +136,20 @@ for wallpaper in "${WALLPAPERS[@]}"; do
     OPTIONS+=("$wallpaper")
 done
 
-ROFI_INPUT=""
-
-for wallpaper in "${OPTIONS[@]}"; do
-    if [ "$wallpaper" = "Random" ]; then
-        ROFI_INPUT+="Random\0icon\x1fpreferences-desktop-wallpaper\n"
-    else
-        ROFI_INPUT+="$wallpaper\0icon\x1f$WALLPAPER_DIR/$wallpaper\n"
-    fi
-done
-
 # ---------------------------------------------------------
 # Open picker
 # ---------------------------------------------------------
 
-SELECTED=$(printf '%b' "$ROFI_INPUT" | \
-    rofi \
-        -dmenu \
-        -i \
-        -p "Wallpaper" \
-        -theme "$ROFI_THEME")
+SELECTED=$(for wallpaper in "${OPTIONS[@]}"; do
+    case "$wallpaper" in
+        *$'\n'*) continue ;;
+    esac
+    if [ "$wallpaper" = "Random" ]; then
+        printf '%s\0icon\x1f%s\n' "$wallpaper" "preferences-desktop-wallpaper"
+    else
+        printf '%s\0icon\x1f%s\n' "$wallpaper" "$WALLPAPER_DIR/$wallpaper"
+    fi
+done | rofi -dmenu -i -p "Wallpaper" -theme "$ROFI_THEME")
 
 [ -z "$SELECTED" ] && exit 0
 

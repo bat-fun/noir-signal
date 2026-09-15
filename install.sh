@@ -546,12 +546,25 @@ create_backup() {
     local count=0
 
     : > "$BACKUP_DIR/manifest.txt"
+    : > "$BACKUP_DIR/cache-manifest.txt"
 
     for target in "${CONFIG_TARGETS[@]}"; do
         if [[ -e "$CONFIG_DIR/$target" || -L "$CONFIG_DIR/$target" ]]; then
             cp -a -- "$CONFIG_DIR/$target" "$BACKUP_DIR/$target"
             printf '%s\n' "$target" >> "$BACKUP_DIR/manifest.txt"
             count=$((count + 1))
+        fi
+    done
+
+    local cache_target cache_source
+    for cache_target in ".cache/noir-signal" ".cache/noir-signal-wallpaper"; do
+        cache_source="$HOME/$cache_target"
+        if [[ -e "$cache_source" || -L "$cache_source" ]]; then
+            mkdir -p -- "$BACKUP_DIR/$(dirname -- "$cache_target")"
+            cp -a -- "$cache_source" "$BACKUP_DIR/$cache_target"
+            printf 'present %s\n' "$cache_target" >> "$BACKUP_DIR/cache-manifest.txt"
+        else
+            printf 'absent %s\n' "$cache_target" >> "$BACKUP_DIR/cache-manifest.txt"
         fi
     done
 
@@ -643,9 +656,8 @@ install_packages() {
             run_root pacman -S --needed "${OFFICIAL_MISSING[@]}"
         fi
         if ((${#AUR_MISSING[@]})); then
-            info "yay would be bootstrapped because AUR packages are required."
-            run_root pacman -S --needed base-devel git
-            run_user yay -S --needed --noconfirm "${AUR_MISSING[@]}"
+            info "yay must be installed separately before AUR packages can be installed."
+            info "Would run: yay -S --needed --noconfirm $(join_by ' ' "${AUR_MISSING[@]}")"
         fi
         return 0
     fi
@@ -676,40 +688,8 @@ install_yay() {
     section "AUR HELPER"
     info "AUR packages are required for the Noir Signal defaults:"
     printf '  %s\n' "$(join_by ', ' "${AUR_MISSING[@]}")"
-    info "yay is not installed; bootstrapping it now."
-
-    if [[ "$DRY_RUN" -eq 1 ]]; then
-        info "Would install base-devel and git, then build yay from the AUR."
-        return 0
-    fi
-
-    sudo pacman -S --needed --noconfirm base-devel git
-
-    local build_dir
-    build_dir="$(mktemp -d -t noir-signal-yay.XXXXXX)"
-
-    if ! git clone --depth 1 --quiet https://aur.archlinux.org/yay.git "$build_dir/yay"; then
-        rm -rf -- "$build_dir"
-        fail "Could not clone the yay AUR repository."
-        exit 1
-    fi
-
-    if ! (
-        cd -- "$build_dir/yay"
-        makepkg --syncdeps --install --noconfirm
-    ); then
-        rm -rf -- "$build_dir"
-        fail "Could not build/install yay."
-        exit 1
-    fi
-
-    rm -rf -- "$build_dir"
-
-    have_cmd yay || {
-        fail "yay installation did not produce a usable yay command."
-        exit 1
-    }
-    success "yay is ready."
+    fail "yay is not installed. Install and review yay separately, then rerun this installer."
+    return 1
 }
 
 install_configuration() {
@@ -1046,7 +1026,7 @@ bootstrap_theme() {
     for file in "${expected[@]}"; do
         [[ -s "$file" ]] || {
             fail "Matugen did not generate the expected file: $file"
-            exit 1
+            return 1
         }
     done
 
@@ -1096,7 +1076,7 @@ validate_installed_commands() {
 
     if [[ "$missing" -gt 0 ]]; then
         fail "$missing required command(s) are missing after installation."
-        exit 1
+        return 1
     fi
 }
 
@@ -1113,7 +1093,7 @@ validate_installation() {
     for target in "${CONFIG_TARGETS[@]}"; do
         [[ -e "$CONFIG_DIR/$target" || -L "$CONFIG_DIR/$target" ]] || {
             fail "Installed target is missing: ~/.config/$target"
-            exit 1
+            return 1
         }
     done
 
@@ -1126,7 +1106,7 @@ validate_installation() {
     for script in "${scripts[@]}"; do
         [[ -x "$script" ]] || {
             fail "Installed script is not executable: $script"
-            exit 1
+            return 1
         }
     done
 
@@ -1135,7 +1115,7 @@ validate_installation() {
     grep -Fq '$HOME' "$CONFIG_DIR/hypr/module/decoration.lua" || true
     grep -Fq 'waybar-colors.css' "$CONFIG_DIR/waybar/style.css" || {
         fail "Waybar style is not referencing generated waybar-colors.css."
-        exit 1
+        return 1
     }
 
     success "Configuration targets verified."
@@ -1183,6 +1163,18 @@ restore_backup() {
         mkdir -p -- "$CONFIG_DIR"
         cp -a -- "$BACKUP_DIR/$target" "$CONFIG_DIR/$target"
     done < "$BACKUP_DIR/manifest.txt"
+
+    local cache_state cache_target
+    if [[ -f "$BACKUP_DIR/cache-manifest.txt" ]]; then
+        while read -r cache_state cache_target; do
+            [[ -n "$cache_target" ]] || continue
+            rm -rf -- "$HOME/$cache_target"
+            if [[ "$cache_state" == "present" ]]; then
+                mkdir -p -- "$HOME/$(dirname -- "$cache_target")"
+                cp -a -- "$BACKUP_DIR/$cache_target" "$HOME/$cache_target"
+            fi
+        done < "$BACKUP_DIR/cache-manifest.txt"
+    fi
 }
 
 show_final_summary() {

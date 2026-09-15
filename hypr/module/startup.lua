@@ -3,11 +3,11 @@
 -- workflow remains compatible with this first pass.
 
 hl.on("hyprland.start", function()
-    hl.exec_cmd("nm-applet")
-    hl.exec_cmd("waybar")
-    hl.exec_cmd("awww-daemon")
-    hl.exec_cmd("wl-paste --type text --watch cliphist store")
-    hl.exec_cmd("wl-paste --type image --watch cliphist store")
+    hl.exec_cmd("pgrep -x nm-applet >/dev/null || nm-applet")
+    hl.exec_cmd("pgrep -x waybar >/dev/null || waybar")
+    hl.exec_cmd("pgrep -x awww-daemon >/dev/null || awww-daemon")
+    hl.exec_cmd("pgrep -f 'wl-paste --type text --watch cliphist store' >/dev/null || wl-paste --type text --watch cliphist store")
+    hl.exec_cmd("pgrep -f 'wl-paste --type image --watch cliphist store' >/dev/null || wl-paste --type image --watch cliphist store")
 end)
 
 hl.env("XCURSOR_SIZE", "14")

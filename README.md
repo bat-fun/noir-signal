@@ -116,6 +116,9 @@ cd noir-signal
 
 Back up your existing configuration, then install the required dependencies using your preferred Arch Linux workflow.
 
+The automatic installer does not bootstrap an AUR helper. Install and review
+`yay` separately first if you want the default Brave and wlogout packages.
+
 Copy the configuration:
 
 ```bash
@@ -123,6 +126,18 @@ cp -r hypr kitty matugen rofi waybar ~/.config/
 cp starship.toml ~/.config/
 chmod +x ~/.config/hypr/scripts/*
 ```
+
+Create the generated theme files before starting Hyprland. The automatic
+installer does this for you; for a manual install, run Matugen after placing
+at least one image in `~/Pictures/wallpaper`:
+
+```bash
+mkdir -p ~/.cache/noir-signal
+cp matugen/fallbacks/* ~/.cache/noir-signal/
+cp matugen/fallbacks/waybar-colors.css ~/.config/waybar/
+```
+
+Once a wallpaper is available, run Matugen again to replace the fallback palette.
 
 Create the wallpaper directory:
 

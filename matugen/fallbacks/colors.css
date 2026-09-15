@@ -1,0 +1,12 @@
+:root {
+    --noir-bg: #090A0C;
+    --noir-surface: #111318;
+    --noir-surface-alt: #181B21;
+    --noir-text: #E7E4DC;
+    --noir-muted: #777B82;
+    --noir-accent: #D6A85F;
+    --noir-secondary: #8FA6A0;
+    --noir-tertiary: #78889A;
+    --noir-danger: #C46D6D;
+    --noir-outline: #2A2D32;
+}
