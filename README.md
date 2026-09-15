@@ -6,7 +6,51 @@
 
 Built from scratch for Arch Linux + Hyprland.
 
-![Noir Signal](screenshots/desktop.png)
+## Preview
+
+<div align="center">
+
+<table>
+<tr>
+<td width="50%">
+
+<img src="screenshots/desktop.png" alt="Noir Signal desktop">
+
+</td>
+<td width="50%">
+
+<img src="screenshots/waybar.png" alt="Noir Signal Waybar">
+
+</td>
+</tr>
+<tr>
+<td width="50%">
+
+<img src="screenshots/code-oss.png" alt="Noir Signal Code-oss">
+
+</td>
+<td width="50%">
+
+<img src="screenshots/wallpaper-selecter.png" alt="Noir Signal Wallpaper-selecter">
+
+</td>
+</tr>
+
+<tr>
+<td width="50%">
+
+<img src="screenshots/rofi.png" alt="Noir Signal Rofi">
+
+</td>
+<td width="50%">
+
+<img src="screenshots/kitty.png" alt="Noir Signal Kitty">
+
+</td>
+</tr>
+</table>
+
+</div>
 
 ---
 
