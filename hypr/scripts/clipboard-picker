@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
 
+require_commands() {
+	local missing=()
+	local command
+
+	for command in "$@"; do
+		command -v "$command" >/dev/null 2>&1 || missing+=("$command")
+	done
+
+	if ((${#missing[@]})); then
+		printf 'Clipboard picker: missing command(s): %s\n' "${missing[*]}" >&2
+		exit 1
+	fi
+}
+
+require_commands cliphist rofi wl-copy
+
 SELECTED=$(cliphist list | rofi -dmenu -i -p "Clipboard")
 
 [ -z "$SELECTED" ] && exit 0

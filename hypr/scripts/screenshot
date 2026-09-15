@@ -1,6 +1,26 @@
 #!/usr/bin/env bash
 set -Eeuo pipefail
 
+require_commands() {
+    local missing=()
+    local command
+
+    for command in "$@"; do
+        command -v "$command" >/dev/null 2>&1 || missing+=("$command")
+    done
+
+    if ((${#missing[@]})); then
+        printf 'Screenshot: missing command(s): %s\n' "${missing[*]}" >&2
+        exit 1
+    fi
+}
+
+notify() {
+    command -v notify-send >/dev/null 2>&1 && notify-send "$@" || true
+}
+
+require_commands grim slurp wl-copy
+
 SCREENSHOT_DIR="$HOME/Pictures/screenshots"
 mkdir -p "$SCREENSHOT_DIR"
 
@@ -15,7 +35,7 @@ fi
 
 wl-copy < "$FILE"
 
-notify-send \
+notify \
     -t 1800 \
     "Screenshot saved" \
     "$(basename "$FILE")"

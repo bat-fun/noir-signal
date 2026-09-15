@@ -32,7 +32,7 @@ configuration {
 }
 
 window {
-    width: 500px;
+    width: 40%;
     border: 1px;
     border-color: #2A2D32;
     border-radius: 12px;
