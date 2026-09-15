@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -Eeuo pipefail
+
+menu=''
+menu+=$'Network\n'
+menu+=$'Bluetooth\n'
+menu+=$'Audio mute\n'
+menu+=$'Audio louder\n'
+menu+=$'Audio quieter\n'
+menu+=$'Brightness up\n'
+menu+=$'Brightness down\n'
+menu+=$'Wallpaper picker\n'
+menu+=$'Lock screen\n'
+menu+=$'Power menu'
+
+choice=$(printf '%s' "$menu" | rofi -dmenu -i -p 'Control' -config "$HOME/.config/rofi/config.rasi")
+
+case "$choice" in
+    Network) nm-connection-editor ;;
+    Bluetooth) blueman-manager ;;
+    'Audio mute') wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle ;;
+    'Audio louder') wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+ ;;
+    'Audio quieter') wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- ;;
+    'Brightness up') brightnessctl -e4 -n2 set 5%+ ;;
+    'Brightness down') brightnessctl -e4 -n2 set 5%- ;;
+    'Wallpaper picker') "$HOME/.config/hypr/scripts/wallpaper-picker" ;;
+    'Lock screen') hyprlock ;;
+    'Power menu') wlogout ;;
+    *) exit 0 ;;
+esac

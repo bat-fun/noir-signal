@@ -13,6 +13,7 @@ hl.bind(mainMod .. " + C", hl.dsp.exec_cmd(p.code))
 -- Random wallpaper
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper-picker --random"))
 -- Session / UI
+hl.bind(mainMod .. " + SHIFT + P", hl.dsp.exec_cmd("~/.config/hypr/scripts/control-panel"))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("pkill waybar && waybar"))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
 hl.bind(mainMod .. " + X", hl.dsp.exec_cmd("wlogout"))
