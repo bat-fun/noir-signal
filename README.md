@@ -70,18 +70,18 @@ The configuration is modular, transparent, and meant to be changed.
 
 ## FEATURES
 
-|                |                                                 |
-| -------------- | ----------------------------------------------- |
-| **Hyprland**   | Modular Lua configuration                       |
-| **Matugen**    | Wallpaper-driven dynamic colors                 |
-| **Waybar**     | Minimal system bar                              |
-| **Rofi**       | Application + wallpaper launchers               |
-| **Kitty**      | Terminal with matching palette                  |
-| **Hyprlock**   | Minimal lock screen                             |
-| **Starship**   | Compact shell prompt                            |
-| **Workflows**  | Clipboard, screenshots, media & system controls |
+|                |                                                        |
+| -------------- | ------------------------------------------------------ |
+| **Hyprland**   | Modular Lua configuration                              |
+| **Matugen**    | Wallpaper-driven dynamic colors                        |
+| **Waybar**     | Minimal system bar                                     |
+| **Rofi**       | Application + wallpaper launchers                      |
+| **Kitty**      | Terminal with matching palette                         |
+| **Hyprlock**   | Minimal lock screen                                    |
+| **Starship**   | Compact shell prompt                                   |
+| **Workflows**  | Clipboard, screenshots, media & system controls        |
 | **Wallpapers** | awww transitions using an independent local collection |
-| **Installer**  | Automatic setup with backup & validation        |
+| **Installer**  | Automatic setup with backup & validation               |
 
 ---
 
