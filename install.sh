@@ -952,7 +952,7 @@ bootstrap_theme() {
         "$HOME/.cache/noir-signal/hyprlock-colors.conf"
         "$HOME/.cache/noir-signal/kitty-colors.conf"
         "$HOME/.cache/noir-signal/rofi-colors.rasi"
-        "$HOME/.cache/noir-signal/dunst-colors.conf"
+        "$CONFIG_DIR/dunst/dunstrc"
         "$CONFIG_DIR/waybar/waybar-colors.css"
     )
     local file
