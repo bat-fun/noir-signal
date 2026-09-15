@@ -61,6 +61,7 @@ RUNTIME_PACKAGES=(
     playerctl
     pipewire
     pipewire-audio
+    pipewire-pulse
     wireplumber
     libnotify
     networkmanager
@@ -888,6 +889,102 @@ write_runtime_wallpaper_cache() {
     printf '%s\n' "$wallpaper" > "$HOME/.cache/noir-signal-wallpaper"
 }
 
+ensure_theme_fallbacks() {
+    local cache_dir="$HOME/.cache/noir-signal"
+
+    if [[ "$DRY_RUN" -eq 1 ]]; then
+        info "Would create fallback theme files in $cache_dir."
+        return 0
+    fi
+
+    mkdir -p -- "$cache_dir"
+
+    [[ -s "$cache_dir/colors.css" ]] || cat > "$cache_dir/colors.css" <<'EOF'
+:root {
+    --noir-bg: #090A0C;
+    --noir-surface: #111318;
+    --noir-surface-alt: #181B21;
+    --noir-text: #E7E4DC;
+    --noir-muted: #777B82;
+    --noir-accent: #D6A85F;
+    --noir-secondary: #8FA6A0;
+    --noir-tertiary: #78889A;
+    --noir-danger: #C46D6D;
+    --noir-outline: #2A2D32;
+}
+EOF
+
+    [[ -s "$cache_dir/hyprland-colors.lua" ]] || cat > "$cache_dir/hyprland-colors.lua" <<'EOF'
+return {
+    accent = "#D6A85F",
+    secondary = "#8FA6A0",
+    danger = "#C46D6D",
+}
+EOF
+
+    [[ -s "$cache_dir/hyprlock-colors.conf" ]] || cat > "$cache_dir/hyprlock-colors.conf" <<'EOF'
+$accent = #D6A85F
+$secondary = #8FA6A0
+$danger = #C46D6D
+$text = #E7E4DC
+$muted = #777B82
+$background = #090A0C
+EOF
+
+    [[ -s "$cache_dir/kitty-colors.conf" ]] || cat > "$cache_dir/kitty-colors.conf" <<'EOF'
+background #090A0C
+foreground #E7E4DC
+selection_background #2A2520
+selection_foreground #F1EDE4
+cursor #D6A85F
+cursor_text_color #090A0C
+color0 #111318
+color1 #C46D6D
+color2 #8FA6A0
+color3 #D6A85F
+color4 #78889A
+color5 #9A879A
+color6 #7FA09A
+color7 #BFC0BA
+color8 #4C5057
+color9 #D77C7C
+color10 #A7BCB5
+color11 #E2BA70
+color12 #91A0B0
+color13 #B39AB3
+color14 #94B6AF
+color15 #E7E4DC
+EOF
+
+    [[ -s "$cache_dir/rofi-colors.rasi" ]] || cat > "$cache_dir/rofi-colors.rasi" <<'EOF'
+* {
+    noir-accent: #D6A85F;
+    noir-secondary: #8FA6A0;
+    noir-tertiary: #78889A;
+    noir-muted: #777B82;
+    noir-outline: #2A2D32;
+    noir-danger: #C46D6D;
+    noir-bg: #090A0C;
+    noir-surface: #111318;
+    noir-surface-alt: #181B21;
+    noir-text: #E7E4DC;
+}
+EOF
+
+    [[ -s "$CONFIG_DIR/waybar/waybar-colors.css" ]] || cat > "$CONFIG_DIR/waybar/waybar-colors.css" <<'EOF'
+@define-color noir_bg #090A0C;
+@define-color noir_surface #111318;
+@define-color noir_surface_alt #181B21;
+@define-color noir_text #E7E4DC;
+@define-color noir_muted #777B82;
+@define-color noir_accent #D6A85F;
+@define-color noir_secondary #8FA6A0;
+@define-color noir_tertiary #78889A;
+@define-color noir_danger #C46D6D;
+@define-color noir_outline #2A2D32;
+EOF
+}
+
 bootstrap_theme() {
     CURRENT_PHASE="Matugen bootstrap"
     section "THEME BOOTSTRAP"
@@ -897,6 +994,7 @@ bootstrap_theme() {
     if [[ -z "$selected" ]]; then
         if ! select_initial_wallpaper; then
             THEME_SKIPPED=1
+            ensure_theme_fallbacks
             warn "No wallpaper is available for initial Matugen generation."
             warn "Add an image to $WALLPAPER_DIR and run the wallpaper picker after installation."
             return 0
@@ -1075,10 +1173,9 @@ restore_backup() {
     [[ -n "$BACKUP_DIR" && -f "$BACKUP_DIR/manifest.txt" ]] || return 1
 
     local target
-    while IFS= read -r target; do
-        [[ -n "$target" ]] || continue
+    for target in "${CONFIG_TARGETS[@]}"; do
         rm -rf -- "$CONFIG_DIR/$target"
-    done < "$BACKUP_DIR/manifest.txt"
+    done
 
     while IFS= read -r target; do
         [[ -n "$target" ]] || continue

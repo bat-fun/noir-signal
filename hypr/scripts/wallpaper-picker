@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+set -Eeuo pipefail
 
 WALLPAPER_DIR="$HOME/Pictures/wallpaper"
 ROFI_THEME="$HOME/.config/rofi/noir-signal-wallpaper.rasi"
@@ -45,26 +46,33 @@ apply_wallpaper() {
     local transition
     transition=$(printf '%s\n' "${TRANSITIONS[@]}" | shuf -n 1)
 
-    awww img "$wallpaper" \
+    if ! awww img "$wallpaper" \
         --transition-type "$transition" \
         --transition-duration 1.5 \
-        --transition-fps 60
+        --transition-fps 60; then
+        notify-send "Wallpaper Picker" "Could not apply wallpaper"
+        return 1
+    fi
 
-    matugen \
+    if ! matugen \
         --mode dark \
         --type scheme-tonal-spot \
         --source-color-index 0 \
         --quiet \
-        image "$wallpaper"
+        image "$wallpaper"; then
+        notify-send "Wallpaper Picker" "Could not generate theme"
+        return 1
+    fi
 
-    killall -SIGUSR2 waybar
+    killall -SIGUSR2 waybar 2>/dev/null || true
 
     for pid in $(pgrep kitty); do
-        kill -SIGUSR1 "$pid" 2>/dev/null
+        kill -SIGUSR1 "$pid" 2>/dev/null || true
     done
 
-    hyprctl reload
+    hyprctl reload >/dev/null
 
+    mkdir -p -- "$(dirname -- "$CACHE_FILE")"
     printf '%s\n' "$wallpaper" > "$CACHE_FILE"
 
     notify-send \
@@ -77,7 +85,7 @@ apply_wallpaper() {
 # Direct random mode
 # ---------------------------------------------------------
 
-if [ "$1" = "--random" ]; then
+if [[ "${1:-}" = "--random" ]]; then
     SELECTED=$(printf '%s\n' "${WALLPAPERS[@]}" | shuf -n 1)
     apply_wallpaper "$SELECTED"
     exit 0

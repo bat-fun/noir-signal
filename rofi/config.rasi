@@ -18,7 +18,7 @@ configuration {
 * {
     bg:         #090A0C;
     surface:    #111318;
-    surface2:   #181B21;
+    surface-alt: #181B21;
 
     text:       #E7E4DC;
     muted:      @noir-muted;
