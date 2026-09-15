@@ -34,7 +34,7 @@ check_service() {
     fi
 }
 
-printf 'NOIR SIGNAL SYSTEM CHECK\n\n'
+printf 'RICE SYSTEM CHECK\n\n'
 
 for command in hyprctl waybar dunst rofi kitty starship matugen grim notify-send; do
     check_command "$command"

@@ -1,4 +1,4 @@
-# NOIR SIGNAL
+# RICE
 
 ### A dark cinematic Hyprland rice.
 
@@ -14,24 +14,24 @@ Built from scratch for Arch Linux + Hyprland.
 <tr>
 <td width="50%">
 
-<img src="screenshots/desktop.png" alt="Noir Signal desktop">
+<img src="screenshots/desktop.png" alt="Rice desktop">
 
 </td>
 <td width="50%">
 
-<img src="screenshots/waybar.png" alt="Noir Signal Waybar">
+<img src="screenshots/waybar.png" alt="Rice Waybar">
 
 </td>
 </tr>
 <tr>
 <td width="50%">
 
-<img src="screenshots/code-oss.png" alt="Noir Signal Code-oss">
+<img src="screenshots/code-oss.png" alt="Rice Code-oss">
 
 </td>
 <td width="50%">
 
-<img src="screenshots/wallpaper-selecter.png" alt="Noir Signal Wallpaper-selecter">
+<img src="screenshots/wallpaper-selecter.png" alt="Rice Wallpaper selector">
 
 </td>
 </tr>
@@ -39,12 +39,12 @@ Built from scratch for Arch Linux + Hyprland.
 <tr>
 <td width="50%">
 
-<img src="screenshots/rofi.png" alt="Noir Signal Rofi">
+<img src="screenshots/rofi.png" alt="Rice Rofi">
 
 </td>
 <td width="50%">
 
-<img src="screenshots/kitty.png" alt="Noir Signal Kitty">
+<img src="screenshots/kitty.png" alt="Rice Kitty">
 
 </td>
 </tr>
@@ -56,7 +56,7 @@ Built from scratch for Arch Linux + Hyprland.
 
 ## THE IDEA
 
-Noir Signal is a personal Linux desktop built around **restraint**.
+Rice is a personal Linux desktop built around **restraint**.
 
 Dark surfaces.
 Warm amber accents.
@@ -98,7 +98,7 @@ Copy and paste into your terminal:
 git clone https://github.com/bat-fun/noir-signal.git && cd noir-signal && chmod +x install.sh && ./install.sh
 ```
 
-The installer checks your system, installs dependencies, backs up existing configuration, installs Noir Signal, uses any wallpapers already in `~/Pictures/wallpaper`, generates the initial theme, and validates the result.
+The installer checks your system, installs dependencies, backs up existing configuration, installs Rice, uses any wallpapers already in `~/Pictures/wallpaper`, generates the initial theme, and validates the result.
 
 Want to see what it will do first?
 
@@ -184,7 +184,7 @@ Change the wallpaper.
 
 ## WALLPAPERS
 
-Wallpaper files are independent from the Noir Signal repository and are never
+Wallpaper files are independent from the Rice repository and are never
 downloaded or managed by its installer. Use your own collection, or manage the
 separate wallpaper repository independently:
 
@@ -192,9 +192,9 @@ separate wallpaper repository independently:
 ~/Pictures/wallpaper
 ```
 
-Noir Signal only reads supported image files from that directory at runtime.
+Rice only reads supported image files from that directory at runtime.
 
-Or let the installer add the optional Noir Signal collection.
+Or let the installer add the optional Rice collection.
 
 Existing wallpapers are preserved.
 
@@ -276,7 +276,7 @@ The automatic installer handles the required desktop components and supporting t
 
 ## PHILOSOPHY
 
-Noir Signal is not designed to be everything.
+Rice is not designed to be everything.
 
 It is designed to be **enough**.
 
@@ -290,9 +290,9 @@ Just a desktop that stays out of the way.
 
 ## CREDITS
 
-Noir Signal is an original configuration built from scratch.
+Rice is an original configuration built from scratch.
 
-The project was initially inspired by the visual direction and experimentation of [`bat-fun/batcave-hyprland`](https://github.com/bat-fun/batcave-hyprland), but Noir Signal is independently structured and configured.
+The project was initially inspired by the visual direction and experimentation of [`bat-fun/batcave-hyprland`](https://github.com/bat-fun/batcave-hyprland), but Rice is independently structured and configured.
 
 ## LICENSE
 
