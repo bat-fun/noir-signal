@@ -18,7 +18,7 @@ window#waybar {
     background: alpha(@noir_bg, 0.88);
 
     border: 1px solid alpha(@noir_outline, 0.72);
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 0 9px;
     margin: 0;
 }
@@ -41,6 +41,23 @@ window#waybar {
     font-weight: 700;
 
     transition: color 180ms ease, background 180ms ease;
+}
+
+#custom-control {
+    margin: 3px 7px 3px 0;
+    padding: 0 9px;
+
+    color: @noir_accent;
+    background: alpha(@noir_accent, 0.10);
+    border: 1px solid alpha(@noir_accent, 0.26);
+    border-radius: 7px;
+
+    transition: color 180ms ease, background 180ms ease;
+}
+
+#custom-control:hover {
+    color: @noir_text;
+    background: alpha(@noir_accent, 0.18);
 }
 
 #custom-arch:hover {
@@ -79,7 +96,7 @@ window#waybar {
 #workspaces button.active {
     color: @noir_bg;
     background: @noir_accent;
-    box-shadow: inset 0 -2px @noir_accent;
+    box-shadow: inset 0 -2px @noir_signal;
 }
 
 #workspaces button.urgent {

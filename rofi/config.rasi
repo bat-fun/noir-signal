@@ -31,11 +31,13 @@ configuration {
 }
 
 window {
-    width: 520px;
-    height: 480px;
+    width: 620px;
+    height: 520px;
     border: 1px;
     border-color: @noir-outline;
-    border-radius: 12px;
+    border-radius: 14px;
+    border-left: 3px;
+    border-left-color: @accent;
 
     background-color: @bg;
 
@@ -56,7 +58,7 @@ inputbar {
     background-color: @surface;
     border: 1px;
     border-color: @noir-outline;
-    border-radius: 10px;
+    border-radius: 9px;
 
     children: [
         prompt,
@@ -81,19 +83,19 @@ listview {
     columns: 1;
     lines: 6;
 
-    spacing: 5px;
+    spacing: 6px;
     scrollbar: false;
 }
 
 element {
-    padding: 11px 13px;
-    border-radius: 9px;
+    padding: 12px 14px;
+    border-radius: 8px;
 
     background-color: transparent;
 }
 
 element-icon {
-    size: 22px;
+    size: 25px;
     margin: 0 12px 0 0;
 }
 
@@ -106,7 +108,9 @@ element selected {
     background-color: @surface-alt;
     border: 1px;
     border-color: @accent;
-    padding: 12px 14px 12px 12px;
+    border-left: 3px;
+    border-left-color: @accent;
+    padding: 12px 14px 12px 11px;
 }
 
 element selected element-text {

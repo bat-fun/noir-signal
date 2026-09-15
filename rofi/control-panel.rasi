@@ -13,11 +13,13 @@
 }
 
 window {
-    width: 520px;
-    height: 480px;
+    width: 560px;
+    height: 500px;
     border: 1px;
     border-color: @noir-outline;
-    border-radius: 12px;
+    border-radius: 14px;
+    border-left: 3px;
+    border-left-color: @accent;
     background-color: @bg;
     padding: 20px;
 }
@@ -70,7 +72,9 @@ element selected {
     background-color: @surface-alt;
     border: 1px;
     border-color: @accent;
-    padding: 11px 13px 11px 12px;
+    border-left: 3px;
+    border-left-color: @accent;
+    padding: 11px 13px 11px 10px;
 }
 
 element selected element-text {
