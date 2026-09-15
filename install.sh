@@ -39,6 +39,7 @@ CORE_PACKAGES=(
     hyprland
     hyprlock
     waybar
+    dunst
     rofi
     kitty
     matugen
@@ -94,6 +95,7 @@ REQUIRED_COMMANDS=(
     playerctl
     wpctl
     notify-send
+    dunst
     nm-applet
     blueman-manager
     brightnessctl
@@ -106,6 +108,7 @@ CONFIG_TARGETS=(
     matugen
     rofi
     waybar
+    dunst
     starship.toml
 )
 
@@ -574,6 +577,7 @@ prepare_stage() {
     cp -a -- "$REPO_ROOT/matugen" "$STAGING_DIR/config/matugen"
     cp -a -- "$REPO_ROOT/rofi" "$STAGING_DIR/config/rofi"
     cp -a -- "$REPO_ROOT/waybar" "$STAGING_DIR/config/waybar"
+    cp -a -- "$REPO_ROOT/dunst" "$STAGING_DIR/config/dunst"
     cp -a -- "$REPO_ROOT/starship.toml" "$STAGING_DIR/config/starship.toml"
 
     success "Configuration staged."
@@ -608,6 +612,7 @@ validate_stage() {
         "$STAGING_DIR/config/matugen/templates/hyprland-colors.lua"
         "$STAGING_DIR/config/matugen/templates/hyprlock-colors.conf"
         "$STAGING_DIR/config/matugen/templates/kitty-colors.conf"
+        "$STAGING_DIR/config/matugen/templates/dunst-colors.conf"
         "$STAGING_DIR/config/matugen/templates/noir-colors.css"
         "$STAGING_DIR/config/matugen/templates/rofi-colors.rasi"
         "$STAGING_DIR/config/matugen/templates/waybar-colors.css"
@@ -615,6 +620,7 @@ validate_stage() {
         "$STAGING_DIR/config/rofi/noir-signal-wallpaper.rasi"
         "$STAGING_DIR/config/waybar/config.jsonc"
         "$STAGING_DIR/config/waybar/style.css"
+        "$STAGING_DIR/config/dunst/dunstrc"
         "$STAGING_DIR/config/starship.toml"
     )
 
@@ -803,6 +809,7 @@ return {
     accent = "#D6A85F",
     secondary = "#8FA6A0",
     danger = "#C46D6D",
+    inactive = "#2A2D32",
 }
 EOF
 
@@ -853,6 +860,28 @@ EOF
     noir-surface-alt: #181B21;
     noir-text: #E7E4DC;
 }
+EOF
+
+    [[ -s "$cache_dir/dunst-colors.conf" ]] || cat > "$cache_dir/dunst-colors.conf" <<'EOF'
+[global]
+    background = "#111318"
+    foreground = "#E7E4DC"
+    frame_color = "#2A2D32"
+
+[urgency_low]
+    background = "#111318"
+    foreground = "#777B82"
+    frame_color = "#8FA6A0"
+
+[urgency_normal]
+    background = "#181B21"
+    foreground = "#E7E4DC"
+    frame_color = "#D6A85F"
+
+[urgency_critical]
+    background = "#3A2024"
+    foreground = "#F4D8D8"
+    frame_color = "#C46D6D"
 EOF
 
     [[ -s "$CONFIG_DIR/waybar/waybar-colors.css" ]] || cat > "$CONFIG_DIR/waybar/waybar-colors.css" <<'EOF'
@@ -923,6 +952,7 @@ bootstrap_theme() {
         "$HOME/.cache/noir-signal/hyprlock-colors.conf"
         "$HOME/.cache/noir-signal/kitty-colors.conf"
         "$HOME/.cache/noir-signal/rofi-colors.rasi"
+        "$HOME/.cache/noir-signal/dunst-colors.conf"
         "$CONFIG_DIR/waybar/waybar-colors.css"
     )
     local file

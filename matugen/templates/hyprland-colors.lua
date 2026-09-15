@@ -7,4 +7,5 @@ return {
     accent = "{{colors.primary.dark.hex}}",
     secondary = "{{colors.secondary.dark.hex}}",
     danger = "{{colors.error.dark.hex}}",
+    inactive = "{{colors.outline.dark.hex}}",
 }

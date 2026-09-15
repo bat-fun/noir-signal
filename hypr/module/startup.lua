@@ -5,6 +5,7 @@
 hl.on("hyprland.start", function()
     hl.exec_cmd("pgrep -x nm-applet >/dev/null || nm-applet")
     hl.exec_cmd("pgrep -x waybar >/dev/null || waybar")
+    hl.exec_cmd("pgrep -x dunst >/dev/null || dunst")
     hl.exec_cmd("pgrep -x awww-daemon >/dev/null || awww-daemon")
     hl.exec_cmd("pgrep -f 'wl-paste --type text --watch cliphist store' >/dev/null || wl-paste --type text --watch cliphist store")
     hl.exec_cmd("pgrep -f 'wl-paste --type image --watch cliphist store' >/dev/null || wl-paste --type image --watch cliphist store")

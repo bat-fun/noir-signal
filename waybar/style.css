@@ -44,7 +44,7 @@ window#waybar {
 }
 
 #custom-arch:hover {
-    color: #E7E4DC;
+    color: @noir_text;
     background: alpha(@noir_accent, 0.2);
     opacity: 0.92;
 }
@@ -64,7 +64,7 @@ window#waybar {
     margin: 0;
     padding: 0 6px;
 
-    color: #62666D;
+    color: @noir_muted;
 
     background: transparent;
     border-radius: 6px;
@@ -73,8 +73,8 @@ window#waybar {
 }
 
 #workspaces button:hover {
-    color: #E7E4DC;
-    background: rgba(231, 228, 220, 0.035);
+    color: @noir_text;
+    background: alpha(@noir_text, 0.06);
 }
 
 #workspaces button.active {
@@ -84,7 +84,7 @@ window#waybar {
 }
 
 #workspaces button.urgent {
-    color: #C46D6D;
+    color: @noir_danger;
 }
 
 
@@ -97,6 +97,9 @@ window#waybar {
     min-width: 180px;
 
     color: @noir_text;
+    background: alpha(@noir_surface, 0.7);
+    border-radius: 7px;
+    padding: 0 14px;
 
     font-size: 11px;
     font-weight: 400;
@@ -126,7 +129,7 @@ window#waybar {
 /* Network */
 
 #network:hover {
-    color: #E7E4DC;
+    color: @noir_text;
     text-shadow: 0 0 8px alpha(@noir_text, 0.3);
 }
 
@@ -148,18 +151,18 @@ window#waybar {
 
 #bluetooth.off,
 #bluetooth.disabled {
-    color: #4C5057;
+    color: alpha(@noir_muted, 0.55);
 }
 
 #bluetooth:hover {
-    color: #E7E4DC;
+    color: @noir_text;
 }
 
 
 /* Audio */
 
 #pulseaudio:hover {
-    color: #E7E4DC;
+    color: @noir_text;
     text-shadow: 0 0 8px alpha(@noir_text, 0.3);
 }
 

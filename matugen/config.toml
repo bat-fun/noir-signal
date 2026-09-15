@@ -24,3 +24,7 @@ output_path = "~/.cache/noir-signal/hyprland-colors.lua"
 [templates.hyprlock_colors]
 input_path = "~/.config/matugen/templates/hyprlock-colors.conf"
 output_path = "~/.cache/noir-signal/hyprlock-colors.conf"
+
+[templates.dunst_colors]
+input_path = "~/.config/matugen/templates/dunst-colors.conf"
+output_path = "~/.cache/noir-signal/dunst-colors.conf"

@@ -11,7 +11,7 @@ hl.config({
 
         col = {
             active_border   = colors.accent,
-            inactive_border = "rgba(2a2d32cc)",
+            inactive_border = colors.inactive or "rgba(2a2d32cc)",
         },
 
         resize_on_border = true,

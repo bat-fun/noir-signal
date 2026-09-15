@@ -75,6 +75,7 @@ The configuration is modular, transparent, and meant to be changed.
 | **Hyprland**   | Modular Lua configuration                              |
 | **Matugen**    | Wallpaper-driven dynamic colors                        |
 | **Waybar**     | Minimal system bar                                     |
+| **Dunst**      | Themed desktop notifications                           |
 | **Rofi**       | Application + wallpaper launchers                      |
 | **Kitty**      | Terminal with matching palette                         |
 | **Hyprlock**   | Minimal lock screen                                    |
@@ -122,7 +123,7 @@ The automatic installer does not bootstrap an AUR helper. Install and review
 Copy the configuration:
 
 ```bash
-cp -r hypr kitty matugen rofi waybar ~/.config/
+cp -r hypr kitty matugen rofi waybar dunst ~/.config/
 cp starship.toml ~/.config/
 chmod +x ~/.config/hypr/scripts/*
 ```
@@ -172,7 +173,7 @@ Your wallpaper becomes the color source for the entire desktop.
      │      │      │
      └──────┼──────┘
             ▼
-       Rofi · Hyprlock
+ Dunst · Rofi · Hyprlock
 ```
 
 Change the wallpaper.
@@ -243,6 +244,7 @@ noir-signal/
 │   └── templates/
 ├── rofi/
 ├── waybar/
+├── dunst/
 ├── starship.toml
 ├── install.sh
 ├── LICENSE
@@ -268,7 +270,7 @@ matugen/templates/
 
 The automatic installer handles the required desktop components and supporting tools, including:
 
-`Hyprland` · `Hyprlock` · `Waybar` · `Rofi` · `Kitty` · `Matugen` · `Starship` · `Thunar` · `Brave` · `Code - OSS` · `awww` · `cliphist` · `grim` · `slurp` · `playerctl` · `PipeWire` · `NetworkManager` · `Blueman` · `brightnessctl` · `wlogout`
+`Hyprland` · `Hyprlock` · `Waybar` · `Dunst` · `Rofi` · `Kitty` · `Matugen` · `Starship` · `Thunar` · `Brave` · `Code - OSS` · `awww` · `cliphist` · `grim` · `slurp` · `playerctl` · `PipeWire` · `NetworkManager` · `Blueman` · `brightnessctl` · `wlogout`
 
 ---
 
